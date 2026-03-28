@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/CICD_App/.vs/CICD_App/CopilotIndices/17.14.1641.39856
+/CICD_App/.vs/CICD_App/DesignTimeBuild
+/CICD_App/.vs/CICD_App/FileContentIndex
+/CICD_App/.vs/CICD_App/v17
+/CICD_App/CICD_App
+/.vs

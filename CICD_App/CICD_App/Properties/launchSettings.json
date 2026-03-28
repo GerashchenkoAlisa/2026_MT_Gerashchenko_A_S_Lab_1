@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CICD_App": {
+      "commandName": "Project",
+      "commandLineArgs": "dotnet run -- \"config.json\" \"C:\\temp\\test_project\""
+    }
+  }
+}
