@@ -1,7 +1,4 @@
 ﻿using System.Text.Json;
-using CICD_App.Models;
-
-namespace CICD_App.Services;
 
 public class ConfigParser : IConfigParser
 {

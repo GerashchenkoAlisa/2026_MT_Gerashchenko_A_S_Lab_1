@@ -1,8 +1,4 @@
-﻿using CICD_App.Models;
-
-namespace CICD_App.Services;
-
-public class PipelineRunner : IPipelineRunner
+﻿public class PipelineRunner : IPipelineRunner
 {
     private readonly ILoggerService _logger;
     private readonly ICommandExecutor _commandExecutor;

@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Text;
 
-namespace CICD_App.Services;
-
 public class CommandExecutor : ICommandExecutor
 {
     private readonly ILoggerService _logger;

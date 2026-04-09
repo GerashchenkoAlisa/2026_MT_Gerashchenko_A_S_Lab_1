@@ -1,6 +1,4 @@
-﻿namespace CICD_App.Services;
-
-public class LoggerService : ILoggerService
+﻿public class LoggerService : ILoggerService
 {
     private readonly string _logFilePath;
     private readonly object _lockObject = new object();

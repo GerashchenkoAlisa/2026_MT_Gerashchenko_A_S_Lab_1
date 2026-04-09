@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.37111.16 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CICD_App", "CICD_App\CICD_App.csproj", "{303DD1E5-E1BC-494F-990B-27DFD4BCCAC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2026_MT_Gerashchenko_A_S_Lab_1", "2026_MT_Gerashchenko_A_S_Lab_1.csproj", "{A2169B55-E7B1-0F19-7BD8-B109B4C673AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{303DD1E5-E1BC-494F-990B-27DFD4BCCAC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{303DD1E5-E1BC-494F-990B-27DFD4BCCAC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{303DD1E5-E1BC-494F-990B-27DFD4BCCAC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{303DD1E5-E1BC-494F-990B-27DFD4BCCAC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2169B55-E7B1-0F19-7BD8-B109B4C673AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2169B55-E7B1-0F19-7BD8-B109B4C673AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2169B55-E7B1-0F19-7BD8-B109B4C673AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2169B55-E7B1-0F19-7BD8-B109B4C673AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0C04BE08-D99B-4DDE-93C3-236B09FF9A06}
+		SolutionGuid = {58B89C1C-6654-4E34-A81F-2D4870055C12}
 	EndGlobalSection
 EndGlobal

@@ -1,16 +1,11 @@
-﻿using CICD_App.Models;
-using CICD_App.Services;
-
-namespace CICD_App;
-
-class Program
+﻿class Program
 {
     static void Main(string[] args)
     {
         if (args.Length < 2)
         {
-            Console.WriteLine("Usage: CICD_App.exe <config_path> <target_dir>");
-            Console.WriteLine("Example: CICD_App.exe config.json C:\\temp\\test_project");
+            Console.WriteLine("Usage: 2026_MT_Gerashchenko_A_S_Lab_1.exe <config_path> <target_dir>");
+            Console.WriteLine("Example: 2026_MT_Gerashchenko_A_S_Lab_1.exe config.json C:\\temp\\test_project");
             Environment.Exit(1);
         }
 

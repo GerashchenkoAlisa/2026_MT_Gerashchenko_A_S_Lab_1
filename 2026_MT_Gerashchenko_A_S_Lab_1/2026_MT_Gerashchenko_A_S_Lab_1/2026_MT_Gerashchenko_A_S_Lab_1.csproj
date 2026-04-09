@@ -5,6 +5,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AssemblyName>2026_MT_Gerashchenko_A_S_Lab_1</AssemblyName>
+    <RootNamespace>2026_MT_Gerashchenko_A_S_Lab_1</RootNamespace>
   </PropertyGroup>
 
 </Project>

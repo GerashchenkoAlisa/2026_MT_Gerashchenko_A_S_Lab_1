@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "2026_MT_Gerashchenko_A_S_Lab_1": {
+      "commandName": "Project",
+      "commandLineArgs": "config.json \"..\\..\\..\\test_project\"",
+      "workingDirectory": "$(ProjectDir)"
+    }
+  }
+}
