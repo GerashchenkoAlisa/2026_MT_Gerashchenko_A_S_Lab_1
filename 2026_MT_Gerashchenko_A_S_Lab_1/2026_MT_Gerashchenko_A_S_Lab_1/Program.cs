@@ -16,7 +16,7 @@
         {
             var logger = new LoggerService(targetDir);
             var configParser = new ConfigParser();
-            var commandExecutor = new CommandExecutor(logger);
+            var commandExecutor = new CommandExecutor();
             var pipelineRunner = new PipelineRunner(logger, commandExecutor);
 
             logger.LogInfo($"Loading configuration from: {configPath}");
