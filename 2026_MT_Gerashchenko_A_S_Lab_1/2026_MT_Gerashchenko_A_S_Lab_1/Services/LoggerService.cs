@@ -1,17 +1,30 @@
-﻿public class LoggerService : ILoggerService
+﻿using System.IO;
+
+public class LoggerService : ILoggerService
 {
     private readonly string _logFilePath;
     private readonly object _lockObject = new object();
 
     public LoggerService(string targetDir)
     {
-        string workDirName = Path.GetFileName(targetDir.TrimEnd(Path.DirectorySeparatorChar));
-        string timestamp = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss");
-        string logFileName = $"CICD_{workDirName}_{timestamp}.log";
-        _logFilePath = Path.Combine(targetDir, logFileName);
+        if (string.IsNullOrWhiteSpace(targetDir))
+            throw new ArgumentException("Target directory cannot be null or empty.", nameof(targetDir));
 
         Directory.CreateDirectory(targetDir);
-        File.WriteAllText(_logFilePath, string.Empty);
+
+        string logFileName = GenerateLogFileName(targetDir);
+        string parentDir = Path.GetDirectoryName(targetDir) ?? Directory.GetCurrentDirectory();
+        _logFilePath = Path.Combine(parentDir, logFileName);
+    }
+
+    public static string GenerateLogFileName(string targetDir)
+    {
+        string workDirName = Path.GetFileName(targetDir.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
+        if (string.IsNullOrEmpty(workDirName))
+            workDirName = "unknown";
+
+        string timestamp = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss");
+        return $"CICD_{workDirName}_{timestamp}.log";
     }
 
     public void LogInfo(string message) => WriteLog("INFO", message);
