@@ -27,6 +27,10 @@ public interface IBuildSystemUnitOfWork : IDisposable
 
     IDataRepository<SystemEnvironment> SystemEnvironments { get; }
 
+    IDataRepository<MessageSeverity> MessageSeverities { get; }
+
+    IDataRepository<ExecutionResult> ExecutionResults { get; }
+
     Task<int> SaveChangesAsync();
 
     Task BeginTransactionAsync();

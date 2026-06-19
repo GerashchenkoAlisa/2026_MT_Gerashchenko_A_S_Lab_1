@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
 
@@ -10,9 +11,11 @@ using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
 namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
 {
     [DbContext(typeof(BuildSystemDbContext))]
-    partial class BuildSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260619095429_RemoveHasDataSeeding")]
+    partial class RemoveHasDataSeeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");

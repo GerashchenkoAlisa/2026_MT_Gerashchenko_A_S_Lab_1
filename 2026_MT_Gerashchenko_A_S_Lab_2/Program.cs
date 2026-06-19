@@ -58,6 +58,33 @@ public static class Program
     {
         Banner("Loading reference data into system");
 
+        foreach (var stage in factory.CreateProcessStages())
+        {
+            var existing = await uow.ProcessStages.GetByIdAsync(stage.ProcessStageId).ConfigureAwait(false);
+            if (existing is null)
+            {
+                await uow.ProcessStages.AddAsync(stage).ConfigureAwait(false);
+            }
+        }
+
+        foreach (var severity in factory.CreateMessageSeverities())
+        {
+            var existing = await uow.MessageSeverities.GetByIdAsync(severity.MessageSeverityId).ConfigureAwait(false);
+            if (existing is null)
+            {
+                await uow.MessageSeverities.AddAsync(severity).ConfigureAwait(false);
+            }
+        }
+
+        foreach (var result in factory.CreateExecutionResults())
+        {
+            var existing = await uow.ExecutionResults.GetByIdAsync(result.ExecutionResultId).ConfigureAwait(false);
+            if (existing is null)
+            {
+                await uow.ExecutionResults.AddAsync(result).ConfigureAwait(false);
+            }
+        }
+
         foreach (var env in factory.CreateSystemEnvironments())
         {
             var existing = await uow.SystemEnvironments.GetByIdAsync(env.SystemEnvironmentId).ConfigureAwait(false);
@@ -86,6 +113,7 @@ public static class Program
         }
 
         await uow.SaveChangesAsync().ConfigureAwait(false);
+        Banner("Reference data seeding completed");
     }
 
     private static async Task<Entities.ServerConfiguration> SeedServerAsync(IBuildSystemUnitOfWork uow, ISystemDataFactory factory)

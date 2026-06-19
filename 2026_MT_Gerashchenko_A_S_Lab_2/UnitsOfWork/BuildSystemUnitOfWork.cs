@@ -24,6 +24,8 @@ public class BuildSystemUnitOfWork(BuildSystemDbContext context)
     private IBenchmarkTestRepository? benchmarkTests;
     private IPerformanceMetricRepository? performanceMetrics;
     private IDataRepository<SystemEnvironment>? systemEnvironments;
+    private IDataRepository<MessageSeverity>? messageSeverities;
+    private IDataRepository<ExecutionResult>? executionResults;
 
     public IApplicationRepository Applications =>
         this.applications ??= new ApplicationRepository(this.context);
@@ -54,6 +56,12 @@ public class BuildSystemUnitOfWork(BuildSystemDbContext context)
 
     public IDataRepository<SystemEnvironment> SystemEnvironments =>
         this.systemEnvironments ??= new BaseDataRepository<SystemEnvironment>(this.context);
+
+    public IDataRepository<MessageSeverity> MessageSeverities =>
+    this.messageSeverities ??= new BaseDataRepository<MessageSeverity>(this.context);
+
+    public IDataRepository<ExecutionResult> ExecutionResults =>
+        this.executionResults ??= new BaseDataRepository<ExecutionResult>(this.context);
 
     public async Task<int> SaveChangesAsync()
     {
