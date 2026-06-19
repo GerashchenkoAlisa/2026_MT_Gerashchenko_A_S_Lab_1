@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("2026_MT_Gerashchenko_A_S_Lab_1")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8bc027065d30ff38335f5c506582b65727a332b9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c028fd1162a5547731f9cf683f4172deb13d4a71")]
 [assembly: System.Reflection.AssemblyProductAttribute("2026_MT_Gerashchenko_A_S_Lab_1")]
 [assembly: System.Reflection.AssemblyTitleAttribute("2026_MT_Gerashchenko_A_S_Lab_1")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
