@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MT_LAB3.MatrixLib
 {
-    internal class Program
+    internal class MatrixUtils
     {
     }
 }
