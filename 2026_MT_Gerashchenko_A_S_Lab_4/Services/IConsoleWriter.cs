@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace _2026_MT_Gerashchenko_A_S_Lab_4.Services
+﻿namespace _2026_MT_Gerashchenko_A_S_Lab_4.Services;
+public interface IConsoleWriter
 {
-    internal class IConsoleWriter
-    {
-    }
+    Task WriteLineAsync(string message, CancellationToken ct = default);
+    Task WriteErrorLineAsync(string message, CancellationToken ct = default);
 }
