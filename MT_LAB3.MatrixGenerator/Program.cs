@@ -2,6 +2,7 @@
 using MT_LAB3.MatrixLib;
 
 namespace MT_LAB3.MatrixGenerator;
+
 internal static class Program
 {
     private static readonly string OutputDir = Path.Combine(
