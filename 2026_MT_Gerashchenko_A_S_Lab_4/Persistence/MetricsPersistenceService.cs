@@ -11,7 +11,7 @@ public sealed class MetricsPersistenceService(IUnitOfWork uow, ApplicationDbCont
 {
     private const int DefaultStageTypeId = 4;
     private const int DefaultExecutionStatusId = 1;
-
+    private const int DefaultStatusId = 2;  
     private readonly IUnitOfWork uow = uow;
     private readonly ApplicationDbContext dbContext = dbContext;
 

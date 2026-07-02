@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Http;
 using _2026_MT_Gerashchenko_A_S_Lab_4.Persistence;
 using _2026_MT_Gerashchenko_A_S_Lab_4.Services;
-using Fluent.Infrastructure.FluentModel;
-using Microsoft.EntityFrameworkCore.Sqlite;
 
 namespace _2026_MT_Gerashchenko_A_S_Lab_4.Infrastructure;
 public static class ServiceCollectionExtensions
