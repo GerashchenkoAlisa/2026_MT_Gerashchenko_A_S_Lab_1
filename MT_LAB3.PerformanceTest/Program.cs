@@ -34,12 +34,12 @@ internal static class Program
 
         string[] candidates =
         {
-            Path.Combine(slnDir, "2026_MT_Komar_A_A_Lab_2",
-                         "2026_MT_Komar_A_A_Lab_2", "app.db"),
-            Path.Combine(slnDir, "..", "2026_mt_komar_a_a_lab_2",
-                         "2026_MT_Komar_A_A_Lab_2", "app.db"),
-            Path.Combine(slnDir, "..", "2026_MT_Komar_A_A_Lab_2",
-                         "2026_MT_Komar_A_A_Lab_2", "app.db"),
+            Path.Combine(slnDir, "2026_MT_Gerashchenko_A_S_Lab_2",
+                         "2026_MT_Gerashchenko_A_S_Lab_2", "app.db"),
+            Path.Combine(slnDir, "..", "2026_MT_Gerashchenko_A_S_Lab_2",
+                         "2026_MT_Gerashchenko_A_S_Lab_2", "app.db"),
+            Path.Combine(slnDir, "..", "2026_MT_Gerashchenko_A_S_Lab_2",
+                         "2026_MT_Gerashchenko_A_S_Lab_2", "app.db"),
         };
 
         foreach (string c in candidates)
