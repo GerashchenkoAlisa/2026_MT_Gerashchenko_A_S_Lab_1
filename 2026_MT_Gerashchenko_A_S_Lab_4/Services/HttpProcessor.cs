@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿
+using System.Diagnostics;
 using _2026_MT_Gerashchenko_A_S_Lab_4.Infrastructure;
 using _2026_MT_Gerashchenko_A_S_Lab_4.Models;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace _2026_MT_Gerashchenko_A_S_Lab_4.Services;
 public sealed class HttpProcessor(IHttpClientFactory httpClientFactory) : IHttpProcessor
@@ -86,7 +88,7 @@ public sealed class HttpProcessor(IHttpClientFactory httpClientFactory) : IHttpP
 
     private async Task<DownloadResult> DownloadUrlAsync(Uri url, string destinationDir, CancellationToken ct)
     {
-        var client = httpClientFactory.CreateClient("DownloadClient");
+        var client = httpClientFactory.GetHttpClient();
         var filePath = Path.Combine(destinationDir, FileNameSanitizer.Sanitize(url));
         var completed = false;
 
