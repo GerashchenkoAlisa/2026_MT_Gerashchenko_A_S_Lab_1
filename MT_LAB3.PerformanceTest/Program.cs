@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MT_LAB3.MatrixLib;
 
 namespace MT_LAB3.PerformanceTest;
+
 internal sealed record BenchResult(
     int Size,
     string TestType,
@@ -151,7 +152,7 @@ internal static class Program
 
     static void FindBreakevenPoint()
     {
-        Console.WriteLine("\nbreakeven analysis - AddByRows parallel vs sequential");
+        Console.WriteLine("\nBREAKEVEN ANALYSIS - AddByRows parallel vs sequential");
         Console.WriteLine(new string('-', 65));
 
         int[] sizes = { 10, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000 };
@@ -179,7 +180,7 @@ internal static class Program
                 if (wins >= ConsecutiveReq && breakevenN is null)
                 {
                     breakevenN = size;
-                    Console.WriteLine($"\n   STABLE BREAKEVEN at {size}x{size} ({ConsecutiveReq} consecutive parallel wins)\n");
+                    Console.WriteLine($"\n stable breakeven at {size}x{size} ({ConsecutiveReq} consecutive parallel wins)\n");
                 }
             }
             else
@@ -209,7 +210,7 @@ internal static class Program
 
     static void PrintSummary()
     {
-        Console.WriteLine("\nPERFORMANCE SUMMARY (median us, averaged across storage types)");
+        Console.WriteLine("\nperformance summary (median us, averaged across storage types)");
         Console.WriteLine(new string('-', 72));
 
         foreach (var g in Results.GroupBy(r => new { r.Size, r.TestType, r.Algorithm })
@@ -273,8 +274,8 @@ internal static class Program
                 var metric = new PerformanceMetric
                 {
                     BenchmarkTestId = benchmark.BenchmarkTestId,
-                    ServerConfigurationId = 1, 
-                    BuildExecutionId = 1,
+                    ServerConfigurationId = 1,
+                    BuildExecutionId = 1,  
                     SingleThreadTimeMs = r.Microseconds / 1000,
                     MultiThreadTimeMs = r.Microseconds / 1000,
                     MetricRecordTime = DateTime.UtcNow
@@ -313,6 +314,6 @@ internal static class Program
 
     static void PrintBanner()
     {
-        Console.WriteLine("   matrix performance test suite v3.0  ");
+        Console.WriteLine("matrix performance test suite v3.0");
     }
 }
