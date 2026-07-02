@@ -1,12 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using MT_LAB3.MatrixLib;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Numerics;
-using _2026_MT_Gerashchenko_A_S_Lab_2.UnitsOfWork;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Repositories;
 using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
 using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+using _2026_MT_Gerashchenko_A_S_Lab_2.UnitsOfWork;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using MT_LAB3.MatrixLib;
 
 namespace MT_LAB3.PerformanceTest;
 internal sealed record BenchResult(
@@ -34,19 +33,14 @@ internal static class Program
 
         string[] candidates =
         {
-            Path.Combine(slnDir, "2026_MT_Gerashchenko_A_S_Lab_2",
-                         "2026_MT_Gerashchenko_A_S_Lab_2", "app.db"),
-            Path.Combine(slnDir, "..", "2026_MT_Gerashchenko_A_S_Lab_2",
-                         "2026_MT_Gerashchenko_A_S_Lab_2", "app.db"),
-            Path.Combine(slnDir, "..", "2026_MT_Gerashchenko_A_S_Lab_2",
-                         "2026_MT_Gerashchenko_A_S_Lab_2", "app.db"),
+            Path.Combine(slnDir, "2026_MT_Gerashchenko_A_S_Lab_2", "app.db"),
+            Path.Combine(slnDir, "..", "2026_MT_Gerashchenko_A_S_Lab_2", "app.db"),
         };
 
         foreach (string c in candidates)
         {
             string full = Path.GetFullPath(c);
-            if (File.Exists(full))
-                return full;
+            if (File.Exists(full)) return full;
         }
 
         return Path.GetFullPath(candidates[0]);
@@ -75,14 +69,13 @@ internal static class Program
 
     static void CollectSystemInfo()
     {
-        _cpuModelName = Environment.GetEnvironmentVariable("PROCESSOR_IDENTIFIER")
-                        ?? Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE")
+        _cpuModelName = Environment.GetEnvironmentVariable("processor_identifier")
                         ?? "Unknown CPU";
     }
 
     static void PrintSystemInfo()
     {
-        Console.WriteLine("\nSYSTEM INFORMATION");
+        Console.WriteLine("\nsystem information");
         Console.WriteLine(new string('-', 50));
         Console.WriteLine($"   CPU  : {_cpuModelName}");
         Console.WriteLine($"   Cores: {_physCores} physical / {_logCores} logical");
@@ -158,7 +151,7 @@ internal static class Program
 
     static void FindBreakevenPoint()
     {
-        Console.WriteLine("\nBREAKEVEN ANALYSIS - AddByRows parallel vs sequential");
+        Console.WriteLine("\nbreakeven analysis - AddByRows parallel vs sequential");
         Console.WriteLine(new string('-', 65));
 
         int[] sizes = { 10, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000 };
@@ -178,8 +171,7 @@ internal static class Program
             double ratio = (double)seqUs / Math.Max(1, parUs);
 
             string mark = parUs < seqUs ? "parallel faster" : "sequential faster";
-            Console.WriteLine(
-                $"   {size,5}x{size,-5} | seq={seqUs,7} us | par={parUs,7} us | ratio={ratio:F2} | {mark}");
+            Console.WriteLine($"   {size,5}x{size,-5} | seq={seqUs,7} us | par={parUs,7} us | ratio={ratio:F2} | {mark}");
 
             if (parUs < seqUs)
             {
@@ -220,24 +212,13 @@ internal static class Program
         Console.WriteLine("\nPERFORMANCE SUMMARY (median us, averaged across storage types)");
         Console.WriteLine(new string('-', 72));
 
-        foreach (var g in Results
-            .GroupBy(r => new { r.Size, r.TestType, r.Algorithm })
+        foreach (var g in Results.GroupBy(r => new { r.Size, r.TestType, r.Algorithm })
             .OrderBy(g => g.Key.Size)
             .ThenBy(g => g.Key.TestType)
             .ThenBy(g => g.Key.Algorithm))
         {
             double avg = g.Average(r => r.Microseconds);
             Console.WriteLine($"   {g.Key.Size,5}x{g.Key.Size} | {g.Key.Algorithm,-25} | {avg,8:F0} us");
-        }
-
-        Console.WriteLine("\nFASTEST MULTIPLICATION PER SIZE:");
-        foreach (var sg in Results
-            .Where(r => r.TestType == "Multiply")
-            .GroupBy(r => r.Size)
-            .OrderBy(g => g.Key))
-        {
-            var best = sg.MinBy(r => r.Microseconds)!;
-            Console.WriteLine($"   {best.Size,5}x{best.Size} -> {best.Algorithm} ({best.Storage}) - {best.Microseconds} us");
         }
     }
 
@@ -250,109 +231,60 @@ internal static class Program
         File.Copy(dbPath, tmpDb, overwrite: true);
 
         var services = new ServiceCollection();
-        services.AddDbContext<ApplicationDbContext>(opts =>
-            opts.UseSqlite($"Data Source={tmpDb}"));
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddDbContext<BuildSystemDbContext>(opts => opts.UseSqlite($"Data Source={tmpDb}"));
+        services.AddScoped<IBuildSystemUnitOfWork, BuildSystemUnitOfWork>();
 
         bool success = false;
         await using var sp = services.BuildServiceProvider();
         await using var scope = sp.CreateAsyncScope();
-        var uow = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+        var uow = scope.ServiceProvider.GetRequiredService<IBuildSystemUnitOfWork>();
 
         try
         {
-            var cpu = (await uow.CpuModels.FindAsync(c => c.ModelName == _cpuModelName))
-                      .FirstOrDefault()
-                      ?? new CpuModel
-                      {
-                          ModelName = _cpuModelName,
-                          PhysicalCoreCount = _physCores,
-                          LogicalThreadCount = _logCores,
-                      };
-            if (cpu.Id == 0)
+            var processor = (await uow.ProcessorModels.FindAsync(p => p.ProcessorName.Contains(_cpuModelName)))
+                            .FirstOrDefault() ?? new ProcessorModel
+                            {
+                                ProcessorName = _cpuModelName,
+                                PhysicalCores = _physCores,
+                                LogicalCores = _logCores,
+                            };
+
+            if (processor.ProcessorModelId == 0)
             {
-                await uow.CpuModels.AddAsync(cpu);
+                await uow.ProcessorModels.AddAsync(processor);
                 await uow.SaveChangesAsync();
             }
 
-            var osType = (await uow.OperatingSystemTypes.FindAsync(o => o.Name == _osName))
-                         .FirstOrDefault()
-                         ?? new OperatingSystemType { Name = _osName };
-            if (osType.Id == 0)
+            var env = (await uow.SystemEnvironments.FindAsync(e => e.EnvironmentName == _osName))
+                      .FirstOrDefault() ?? new SystemEnvironment { EnvironmentName = _osName };
+
+            if (env.SystemEnvironmentId == 0)
             {
-                await uow.OperatingSystemTypes.AddAsync(osType);
+                await uow.SystemEnvironments.AddAsync(env);
                 await uow.SaveChangesAsync();
             }
 
-            var host = (await uow.Hosts.FindAsync(
-                            h => h.CpuModelId == cpu.Id && h.OperatingSystemTypeId == osType.Id))
-                       .FirstOrDefault()
-                       ?? new Host
-                       {
-                           CpuModelId = cpu.Id,
-                           RamGb = _ramGb > 0 ? _ramGb : 0m,
-                           OperatingSystemTypeId = osType.Id,
-                       };
-            if (host.Id == 0)
-            {
-                await uow.Hosts.AddAsync(host);
-                await uow.SaveChangesAsync();
-            }
-
-            string description = $"MatrixLib Lab3 {DateTime.UtcNow:yyyy-MM-dd HH:mm} UTC";
-            var perfTest = new Entities.PerformanceTest { Description = description };
-            await uow.PerformanceTests.AddAsync(perfTest);
+            var benchmark = new BenchmarkTest { TestDescription = $"Matrix Operations {DateTime.UtcNow:yyyy-MM-dd}" };
+            await uow.BenchmarkTests.AddAsync(benchmark);
             await uow.SaveChangesAsync();
 
-            var defaultProject = (await uow.Projects.GetAllAsync()).FirstOrDefault()
-                ?? throw new InvalidOperationException(
-                    "No projects in Lab-2 DB. Run the Lab-2 program first to seed data.");
-
-            var stageTypes = await uow.StageTypes.GetAllAsync();
-            var execStatuses = await uow.FindAsync<Entities.ExecutionStatus>();
-            var runStage = stageTypes.First(s => s.Name == "Run");
-            var successStatus = execStatuses.First(s => s.Name == "Success");
-
-            foreach (var seqResult in Results.Where(r => !r.Algorithm.Contains("Parallel")))
+            foreach (var r in Results)
             {
-                string parallelAlgo = seqResult.Algorithm.Replace("Sequential", "Parallel");
-                var parResult = Results.FirstOrDefault(
-                    r => r.Size == seqResult.Size
-                      && r.TestType == seqResult.TestType
-                      && r.Algorithm == parallelAlgo
-                      && r.Storage == seqResult.Storage);
-
-                long parUs = parResult?.Microseconds ?? seqResult.Microseconds;
-
-                var step = new PipelineStepExecution
+                var metric = new PerformanceMetric
                 {
-                    ProjectId = defaultProject.Id,
-                    StageTypeId = runStage.Id,
-                    ExecutionStatusId = successStatus.Id,
-                    StartedAt = DateTime.UtcNow,
-                    DurationMs = seqResult.Microseconds / 1000 + parUs / 1000,
-                    ExitCode = 0,
+                    BenchmarkTestId = benchmark.BenchmarkTestId,
+                    ServerConfigurationId = 1, 
+                    BuildExecutionId = 1,
+                    SingleThreadTimeMs = r.Microseconds / 1000,
+                    MultiThreadTimeMs = r.Microseconds / 1000,
+                    MetricRecordTime = DateTime.UtcNow
                 };
-                await uow.PipelineStepExecutions.AddAsync(step);
-                await uow.SaveChangesAsync();
-
-                var metric = new ThreadSpeedMetric
-                {
-                    PerformanceTestId = perfTest.Id,
-                    HostId = host.Id,
-                    PipelineStepExecutionId = step.Id,
-                    SequentialTimeMs = seqResult.Microseconds / 1000,
-                    ParallelTimeMs = parUs / 1000,
-                    StartedAt = DateTime.UtcNow,
-                };
-                await uow.ThreadSpeedMetrics.AddAsync(metric);
+                await uow.PerformanceMetrics.AddAsync(metric);
             }
 
             await uow.SaveChangesAsync();
             success = true;
-
-            int saved = Results.Count(r => !r.Algorithm.Contains("Parallel"));
-            Console.WriteLine($"Saved {saved} ThreadSpeedMetric rows to database.");
+            Console.WriteLine($"Saved {Results.Count} performance records to DB.");
         }
         catch (Exception ex)
         {
@@ -366,15 +298,10 @@ internal static class Program
                 Console.WriteLine("Database updated successfully.");
             }
             if (File.Exists(tmpDb)) File.Delete(tmpDb);
-            string tmpWal = tmpDb + "-wal";
-            string tmpShm = tmpDb + "-shm";
-            if (File.Exists(tmpWal)) File.Delete(tmpWal);
-            if (File.Exists(tmpShm)) File.Delete(tmpShm);
         }
     }
 
-    static (IMatrix<T> a, IMatrix<T> b) MakePair<T>(
-        int size, Random rng, Func<int, int, IMatrix<T>> factory)
+    static (IMatrix<T> a, IMatrix<T> b) MakePair<T>(int size, Random rng, Func<int, int, IMatrix<T>> factory)
         where T : INumber<T>
     {
         var a = factory(size, size);
@@ -386,24 +313,6 @@ internal static class Program
 
     static void PrintBanner()
     {
-        Console.WriteLine("MATRIX PERFORMANCE TEST SUITE v3.0");
-    }
-}
-
-internal static class UowExtensions
-{
-    public static async Task<IEnumerable<T>> FindAsync<T>(
-        this IUnitOfWork uow) where T : class
-    {
-        if (uow is UnitOfWork concreteUow)
-        {
-            var field = typeof(UnitOfWork).GetField(
-                "context",
-                System.Reflection.BindingFlags.NonPublic |
-                System.Reflection.BindingFlags.Instance);
-            if (field?.GetValue(concreteUow) is ApplicationDbContext ctx)
-                return await ctx.Set<T>().ToListAsync().ConfigureAwait(false);
-        }
-        return Enumerable.Empty<T>();
+        Console.WriteLine("   matrix performance test suite v3.0  ");
     }
 }
