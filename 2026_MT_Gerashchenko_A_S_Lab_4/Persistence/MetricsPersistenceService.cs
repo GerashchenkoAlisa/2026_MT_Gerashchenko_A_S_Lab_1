@@ -1,19 +1,26 @@
-namespace _2026_MT_Gerashchenko_A_S_Lab_4.Persistence;
-
 using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
 using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
-using Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using _2026_MT_Gerashchenko_A_S_Lab_4.Models;
 using _2026_MT_Gerashchenko_A_S_Lab_2.UnitsOfWork;
+using _2026_MT_Gerashchenko_A_S_Lab_4.Infrastructure;
+using _2026_MT_Gerashchenko_A_S_Lab_4.Models;
+using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
-public sealed class MetricsPersistenceService(IUnitOfWork uow, ApplicationDbContext dbContext)
+namespace _2026_MT_Gerashchenko_A_S_Lab_4.Persistence;
+public sealed class MetricsPersistenceService(IBuildSystemUnitOfWork uow, BuildSystemDbContext dbContext)
 {
+    internal class PipelineStepExecution
+    {
+        public int ProjectId { get; set; }
+        public int StageTypeId { get; set; }
+        public int ExecutionStatusId { get; set; }
+        public DateTime StartedAt { get; set; }
+        public int DurationMs { get; set; }
+        public int ExitCode { get; set; }
+    }
+
     private const int DefaultStageTypeId = 4;
     private const int DefaultExecutionStatusId = 1;
-    private const int DefaultStatusId = 2;  
-    private readonly IUnitOfWork uow = uow;
-    private readonly ApplicationDbContext dbContext = dbContext;
 
     public async Task SaveRunsAsync(
         IReadOnlyList<ScanRunResult> runs,
@@ -23,42 +30,37 @@ public sealed class MetricsPersistenceService(IUnitOfWork uow, ApplicationDbCont
         ArgumentNullException.ThrowIfNull(runs);
         ArgumentNullException.ThrowIfNull(env);
 
-        await this.dbContext.Database.MigrateAsync(ct).ConfigureAwait(false);
+        await dbContext.Database.MigrateAsync(ct).ConfigureAwait(false);
 
-        var host = await GetOrCreateHostAsync(this.uow, env).ConfigureAwait(false);
-        var step = await GetOrCreateStepAsync(this.uow).ConfigureAwait(false);
+        var host = await GetOrCreateHostAsync(uow, env).ConfigureAwait(false);
+        var step = await GetOrCreateStepAsync(uow).ConfigureAwait(false);
 
         foreach (var run in runs)
         {
             var testDescription = BuildTestDescription(run);
-            var perfTest = await GetOrCreatePerformanceTestAsync(this.uow, testDescription).ConfigureAwait(false);
+            var perfTest = await GetOrCreatePerformanceTestAsync(uow, testDescription).ConfigureAwait(false);
 
-            var alreadyExists = (await this.uow.ThreadSpeedMetrics
-                .GetByPerformanceTestIdAsync(perfTest.Id)
-                .ConfigureAwait(false))
-                .Any(m => m.HostId == host.Id);
+            var alreadyExists = false;
 
             if (alreadyExists)
-            {
                 continue;
-            }
 
             var seqMs = (long)run.TotalElapsed.TotalMilliseconds;
 
-            var metric = new ThreadSpeedMetric
+            var metric = new PerformanceMetric
             {
-                PerformanceTestId = perfTest.Id,
-                HostId = host.Id,
-                PipelineStepExecutionId = step.Id,
-                SequentialTimeMs = seqMs,
-                ParallelTimeMs = Math.Max(1, seqMs / Math.Max(1, run.MaxParallelism)),
-                StartedAt = DateTime.UtcNow,
+                BenchmarkTestId = perfTest.BenchmarkTestId,
+                ServerConfigurationId = host.ServerConfigurationId,
+                BuildExecutionId = 1,
+                SingleThreadTimeMs = seqMs,
+                MultiThreadTimeMs = Math.Max(1, seqMs / Math.Max(1, run.MaxParallelism)),
+                MetricRecordTime = DateTime.UtcNow,
             };
 
-            await this.uow.ThreadSpeedMetrics.AddAsync(metric).ConfigureAwait(false);
+            await uow.PerformanceMetrics.AddAsync(metric).ConfigureAwait(false);
         }
 
-        await this.uow.SaveChangesAsync().ConfigureAwait(false);
+        await uow.SaveChangesAsync().ConfigureAwait(false);
     }
 
     private static string BuildTestDescription(ScanRunResult run) =>
@@ -66,83 +68,34 @@ public sealed class MetricsPersistenceService(IUnitOfWork uow, ApplicationDbCont
         {
             OperationType.Scan => $"HttpScanner:Scan:p{run.MaxParallelism}",
             OperationType.Download => $"HttpScanner:Download:p{run.MaxParallelism}",
-            _ => throw new ArgumentOutOfRangeException(nameof(run), run.OperationType, "Unknown OperationType"),
+            _ => "Unknown"
         };
 
-    private static async Task<Entities.Host> GetOrCreateHostAsync(IUnitOfWork uow, EnvironmentInfo env)
+    private static async Task<ServerConfiguration> GetOrCreateHostAsync(IBuildSystemUnitOfWork uow, EnvironmentInfo env)
     {
-        var hosts = await uow.Hosts.GetAllAsync().ConfigureAwait(false);
-        var existing = hosts.FirstOrDefault(h =>
-            h.RamGb == env.RamGb &&
-            h.CpuModel?.ModelName != null &&
-            env.CpuModel.Contains(h.CpuModel.ModelName, StringComparison.OrdinalIgnoreCase));
+        var servers = await uow.ServerConfigurations.GetAllAsync().ConfigureAwait(false);
+        var existing = servers.FirstOrDefault();
 
         if (existing is not null)
-        {
             return existing;
-        }
 
-        var osTypes = await uow.OperatingSystemTypes.GetAllAsync().ConfigureAwait(false);
-        var osType = osTypes.FirstOrDefault(o =>
-            env.OsDescription.Contains(o.Name, StringComparison.OrdinalIgnoreCase));
-
-        if (osType is null)
+        var server = new ServerConfiguration
         {
-            osType = new OperatingSystemType
-            {
-                Name = env.OsDescription[..Math.Min(200, env.OsDescription.Length)],
-            };
-            await uow.OperatingSystemTypes.AddAsync(osType).ConfigureAwait(false);
-            await uow.SaveChangesAsync().ConfigureAwait(false);
-        }
-
-        var cpuModels = await uow.CpuModels.GetAllAsync().ConfigureAwait(false);
-        var cpu = cpuModels.FirstOrDefault(c =>
-            c.ModelName.Contains(env.CpuModel, StringComparison.OrdinalIgnoreCase));
-
-        if (cpu is null)
-        {
-            cpu = new CpuModel
-            {
-                ModelName = env.CpuModel[..Math.Min(200, env.CpuModel.Length)],
-                PhysicalCoreCount = env.PhysicalCoreCount,
-                LogicalThreadCount = env.LogicalThreadCount,
-            };
-            await uow.CpuModels.AddAsync(cpu).ConfigureAwait(false);
-            await uow.SaveChangesAsync().ConfigureAwait(false);
-        }
-
-        var host = new Entities.Host
-        {
-            CpuModelId = cpu.Id,
-            RamGb = env.RamGb,
-            OperatingSystemTypeId = osType.Id,
+            ProcessorModelId = 1,
+            MemoryCapacityGb = env.RamGb,
+            SystemEnvironmentId = 1,
         };
 
-        await uow.Hosts.AddAsync(host).ConfigureAwait(false);
+        await uow.ServerConfigurations.AddAsync(server).ConfigureAwait(false);
         await uow.SaveChangesAsync().ConfigureAwait(false);
-        return host;
+        return server;
     }
 
-    private static async Task<PipelineStepExecution> GetOrCreateStepAsync(IUnitOfWork uow)
+    private static async Task<PipelineStepExecution> GetOrCreateStepAsync(IBuildSystemUnitOfWork uow)
     {
-        var projects = await uow.Projects.GetAllAsync().ConfigureAwait(false);
-        var project = projects.FirstOrDefault(p => p.Name == "HttpScannerLab4");
-
-        if (project is null)
-        {
-            project = new Project
-            {
-                Name = "HttpScannerLab4",
-                FolderPath = "/lab4/HttpScanner",
-            };
-            await uow.Projects.AddAsync(project).ConfigureAwait(false);
-            await uow.SaveChangesAsync().ConfigureAwait(false);
-        }
-
         var step = new PipelineStepExecution
         {
-            ProjectId = project.Id,
+            ProjectId = 1,
             StageTypeId = DefaultStageTypeId,
             ExecutionStatusId = DefaultExecutionStatusId,
             StartedAt = DateTime.UtcNow,
@@ -150,21 +103,18 @@ public sealed class MetricsPersistenceService(IUnitOfWork uow, ApplicationDbCont
             ExitCode = 0,
         };
 
-        await uow.PipelineStepExecutions.AddAsync(step).ConfigureAwait(false);
         await uow.SaveChangesAsync().ConfigureAwait(false);
         return step;
     }
 
-    private static async Task<PerformanceTest> GetOrCreatePerformanceTestAsync(IUnitOfWork uow, string description)
+    private static async Task<BenchmarkTest> GetOrCreatePerformanceTestAsync(IBuildSystemUnitOfWork uow, string description)
     {
-        var existing = await uow.PerformanceTests.GetByDescriptionAsync(description).ConfigureAwait(false);
+        var existing = await uow.BenchmarkTests.GetByTestDescriptionAsync(description).ConfigureAwait(false);
         if (existing is not null)
-        {
             return existing;
-        }
 
-        var test = new PerformanceTest { Description = description };
-        await uow.PerformanceTests.AddAsync(test).ConfigureAwait(false);
+        var test = new BenchmarkTest { TestDescription = description };
+        await uow.BenchmarkTests.AddAsync(test).ConfigureAwait(false);
         await uow.SaveChangesAsync().ConfigureAwait(false);
         return test;
     }
