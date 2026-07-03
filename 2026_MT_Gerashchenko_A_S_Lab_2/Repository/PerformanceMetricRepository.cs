@@ -31,4 +31,13 @@ public class PerformanceMetricRepository(BuildSystemDbContext context)
             .OrderByDescending(pm => pm.MetricRecordTime)
             .ToListAsync().ConfigureAwait(false);
     }
+
+    public async Task<IEnumerable<PerformanceMetric>> GetAllWithRelationsAsync()
+    {
+        return await this.DbSet
+            .Include(pm => pm.BenchmarkTest)
+            .Include(pm => pm.ServerConfiguration)
+                .ThenInclude(sc => sc!.ProcessorModel)
+            .ToListAsync().ConfigureAwait(false);
+    }
 }

@@ -12,8 +12,8 @@ public class AnalyticsService(IBuildSystemUnitOfWork uow)
 
     public async Task LoadDataAsync()
     {
-        var all = await _uow.PerformanceMetrics.GetAllAsync();
-        _metrics = [.. all];
+        var all = await _uow.PerformanceMetrics.GetAllWithRelationsAsync();
+_metrics = [.. all];
 
         AnsiConsole.MarkupLine(
             $"[green]Загружено {_metrics.Count} записей производительности.[/]");
@@ -97,7 +97,7 @@ public class AnalyticsService(IBuildSystemUnitOfWork uow)
     public List<OrderComparisonEntry> CompareMultiplicationOrders()
     {
         return [.. _metrics
-            .GroupBy(m => m.BenchmarkTest.TestDescription)
+            .GroupBy(m => m.BenchmarkTest?.TestDescription ?? "Unknown")
             .Select(g => new OrderComparisonEntry(
                 Test: g.Key,
                 AvgTime: g.Average(x => x.SingleThreadTimeMs)

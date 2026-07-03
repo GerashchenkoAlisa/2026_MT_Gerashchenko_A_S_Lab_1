@@ -9,4 +9,6 @@ public interface IPerformanceMetricRepository : IDataRepository<PerformanceMetri
     Task<IEnumerable<PerformanceMetric>> GetByBenchmarkTestIdAsync(int benchmarkTestId);
 
     Task<IEnumerable<PerformanceMetric>> GetByServerConfigurationIdAsync(int serverConfigurationId);
+
+    Task<IEnumerable<PerformanceMetric>> GetAllWithRelationsAsync();
 }
