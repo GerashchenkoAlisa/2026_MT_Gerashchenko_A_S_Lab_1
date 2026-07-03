@@ -3,11 +3,11 @@ public record ScanResult
 {
     public ScanResult(Uri url, int? statusCode, long contentLength, TimeSpan responseTime, string? error = null)
     {
-        Url = url;
-        StatusCode = statusCode;
-        ContentLength = contentLength;
-        ResponseTime = responseTime;
-        Error = error;
+        this.Url = url;
+        this.StatusCode = statusCode;
+        this.ContentLength = contentLength;
+        this.ResponseTime = responseTime;
+        this.Error = error;
     }
 
     public Uri Url { get; }
@@ -16,5 +16,5 @@ public record ScanResult
     public TimeSpan ResponseTime { get; }
     public string? Error { get; }
 
-    public bool IsSuccess => Error is null && StatusCode is >= 200 and < 300;
+    public bool IsSuccess => this.Error is null && this.StatusCode is >= 200 and < 300;
 }

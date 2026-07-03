@@ -8,11 +8,11 @@ public record ScanRunResult
         int successCount,
         int errorCount)
     {
-        OperationType = operationType;
-        MaxParallelism = maxParallelism;
-        TotalElapsed = totalElapsed;
-        SuccessCount = successCount;
-        ErrorCount = errorCount;
+        this.OperationType = operationType;
+        this.MaxParallelism = maxParallelism;
+        this.TotalElapsed = totalElapsed;
+        this.SuccessCount = successCount;
+        this.ErrorCount = errorCount;
     }
 
     public OperationType OperationType { get; }

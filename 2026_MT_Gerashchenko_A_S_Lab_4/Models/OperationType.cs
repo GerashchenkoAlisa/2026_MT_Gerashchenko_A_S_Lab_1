@@ -2,5 +2,5 @@
 public enum OperationType
 {
     Scan,
-    Download
+    Download,
 }

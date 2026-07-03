@@ -3,10 +3,10 @@ public record DownloadResult
 {
     public DownloadResult(Uri url, bool isSuccess, long bytesWritten, string? error = null)
     {
-        Url = url;
-        IsSuccess = isSuccess;
-        BytesWritten = bytesWritten;
-        Error = error;
+        this.Url = url;
+        this.IsSuccess = isSuccess;
+        this.BytesWritten = bytesWritten;
+        this.Error = error;
     }
 
     public Uri Url { get; }

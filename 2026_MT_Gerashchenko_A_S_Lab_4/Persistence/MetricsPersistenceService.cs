@@ -12,10 +12,15 @@ public sealed class MetricsPersistenceService(IBuildSystemUnitOfWork uow, BuildS
     internal class PipelineStepExecution
     {
         public int ProjectId { get; set; }
+
         public int StageTypeId { get; set; }
+
         public int ExecutionStatusId { get; set; }
+
         public DateTime StartedAt { get; set; }
+
         public int DurationMs { get; set; }
+
         public int ExitCode { get; set; }
     }
 
@@ -43,7 +48,9 @@ public sealed class MetricsPersistenceService(IBuildSystemUnitOfWork uow, BuildS
             var alreadyExists = false;
 
             if (alreadyExists)
+            {
                 continue;
+            }
 
             var seqMs = (long)run.TotalElapsed.TotalMilliseconds;
 
@@ -77,7 +84,9 @@ public sealed class MetricsPersistenceService(IBuildSystemUnitOfWork uow, BuildS
         var existing = servers.FirstOrDefault();
 
         if (existing is not null)
+        {
             return existing;
+        }
 
         var server = new ServerConfiguration
         {
@@ -111,7 +120,9 @@ public sealed class MetricsPersistenceService(IBuildSystemUnitOfWork uow, BuildS
     {
         var existing = await uow.BenchmarkTests.GetByTestDescriptionAsync(description).ConfigureAwait(false);
         if (existing is not null)
+        {
             return existing;
+        }
 
         var test = new BenchmarkTest { TestDescription = description };
         await uow.BenchmarkTests.AddAsync(test).ConfigureAwait(false);

@@ -8,11 +8,11 @@ public sealed record EnvironmentInfo
         int physicalCoreCount,
         int logicalThreadCount)
     {
-        OsDescription = osDescription;
-        RamGb = ramGb;
-        CpuModel = cpuModel;
-        PhysicalCoreCount = physicalCoreCount;
-        LogicalThreadCount = logicalThreadCount;
+        this.OsDescription = osDescription;
+        this.RamGb = ramGb;
+        this.CpuModel = cpuModel;
+        this.PhysicalCoreCount = physicalCoreCount;
+        this.LogicalThreadCount = logicalThreadCount;
     }
 
     public string OsDescription { get; }

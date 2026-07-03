@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics;
 using _2026_MT_Gerashchenko_A_S_Lab_4.Models;
+using _2026_MT_Gerashchenko_A_S_Lab_4.Services;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_4.Services;
+namespace Services;
 public sealed class BenchmarkRunner(IHttpProcessor processor, IConsoleWriter console)
 {
     private static readonly int[] ParallelismLevels = [1, 10, 50];

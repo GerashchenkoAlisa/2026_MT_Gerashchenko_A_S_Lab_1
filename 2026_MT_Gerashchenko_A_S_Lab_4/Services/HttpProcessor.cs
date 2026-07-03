@@ -55,7 +55,7 @@ public sealed class HttpProcessor(IHttpClientFactory httpClientFactory) : IHttpP
             new ParallelOptions { MaxDegreeOfParallelism = maxParallelism, CancellationToken = ct },
             async (item, token) =>
             {
-                results[item.i] = await DownloadUrlAsync(item.url, destinationDir, token).ConfigureAwait(false);
+                results[item.i] = await this.DownloadUrlAsync(item.url, destinationDir, token).ConfigureAwait(false);
             }).ConfigureAwait(false);
 
         return results;
