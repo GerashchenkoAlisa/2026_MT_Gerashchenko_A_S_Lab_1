@@ -14,7 +14,7 @@ internal sealed record BenchResult(
     string TestType,
     string Algorithm,
     string Storage,
-    long Microseconds);
+    long microseconds);
 
 internal static class Program
 {
@@ -231,7 +231,7 @@ internal static class Program
             .ThenBy(g => g.Key.TestType)
             .ThenBy(g => g.Key.Algorithm))
         {
-            double avg = g.Average(r => r.Microseconds);
+            double avg = g.Average(r => r.microseconds);
             Console.WriteLine($"   {g.Key.Size,5}x{g.Key.Size} | {g.Key.Algorithm,-25} | {avg,8:F0} us");
         }
     }
@@ -289,8 +289,8 @@ internal static class Program
                     BenchmarkTestId = benchmark.BenchmarkTestId,
                     ServerConfigurationId = 1,
                     BuildExecutionId = 1,
-                    SingleThreadTimeMs = r.Microseconds / 1000,
-                    MultiThreadTimeMs = r.Microseconds / 1000,
+                    SingleThreadTimeMs = r.microseconds / 1000,
+                    MultiThreadTimeMs = r.microseconds / 1000,
                     MetricRecordTime = DateTime.UtcNow,
                 };
                 await uow.PerformanceMetrics.AddAsync(metric);
