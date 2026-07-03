@@ -1,9 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
-
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
 {
     /// <inheritdoc />
@@ -12,6 +9,8 @@ namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            ArgumentNullException.ThrowIfNull(migrationBuilder);
+
             migrationBuilder.DeleteData(
                 table: "ExecutionResults",
                 keyColumn: "ExecutionResultId",
@@ -106,57 +105,55 @@ namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            ArgumentNullException.ThrowIfNull(migrationBuilder);
+
             migrationBuilder.InsertData(
                 table: "ExecutionResults",
-                columns: new[] { "ExecutionResultId", "ResultDescription", "ResultName" },
+                columns:["ExecutionResultId", "ResultDescription", "ResultName"],
                 values: new object[,]
                 {
                     { 1, "Execution completed successfully", "Passed" },
                     { 2, "Execution encountered errors", "Failed" },
                     { 3, "Execution was aborted", "Aborted" },
-                    { 4, "Execution is currently running", "InProgress" }
+                    { 4, "Execution is currently running", "InProgress" },
                 });
-
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "MessageSeverities",
-                columns: new[] { "MessageSeverityId", "SeverityDescription", "SeverityName" },
+                columns:["MessageSeverityId", "SeverityDescription", "SeverityName"],
                 values: new object[,]
                 {
                     { 1, "Critical compilation error", "Error" },
                     { 2, "Non-blocking issue", "Warning" },
-                    { 3, "Informational notification", "Info" }
+                    { 3, "Informational notification", "Info" },
                 });
-
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "ProcessStages",
-                columns: new[] { "ProcessStageId", "StageName" },
+                columns:["ProcessStageId", "StageName"],
                 values: new object[,]
                 {
                     { 1, "Compile" },
                     { 2, "UnitTest" },
                     { 3, "CodeAnalysis" },
-                    { 4, "Deploy" }
+                    { 4, "Deploy" },
                 });
-
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "ProcessorModels",
-                columns: new[] { "ProcessorModelId", "LogicalCores", "PhysicalCores", "ProcessorName" },
+                columns:["ProcessorModelId", "LogicalCores", "PhysicalCores", "ProcessorName"],
                 values: new object[,]
                 {
                     { 1, 32, 16, "AMD Ryzen 9 7950X" },
                     { 2, 32, 24, "Intel Core i9-13900K" },
-                    { 3, 12, 6, "AMD Ryzen 5 5600X" }
+                    { 3, 12, 6, "AMD Ryzen 5 5600X" },
                 });
-
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "SystemEnvironments",
-                columns: new[] { "SystemEnvironmentId", "EnvironmentDetails", "EnvironmentName" },
+                columns:["SystemEnvironmentId", "EnvironmentDetails", "EnvironmentName"],
                 values: new object[,]
                 {
                     { 1, null, "Windows 11 Pro (64-bit)" },
                     { 2, null, "Windows 10 Pro (64-bit)" },
                     { 3, null, "Ubuntu 24.04 LTS (64-bit)" },
-                    { 4, null, "macOS Sequoia 15" }
+                    { 4, null, "macOS Sequoia 15" },
                 });
         }
     }

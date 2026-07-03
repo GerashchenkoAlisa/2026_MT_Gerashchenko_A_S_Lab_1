@@ -1,4 +1,3 @@
-﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -23,7 +22,7 @@ public class ProcessorModel : BaseEntity<int>
     [Required]
     public int LogicalCores { get; set; }
 
-    public virtual ICollection<ServerConfiguration> ServerConfigurations { get; } = [];
+    public virtual ICollection<ServerConfiguration> ServerConfigurations { get; } =[];
 
     public override string ToLogString(string val = "")
         => base.ToLogString($"{this.ProcessorName} Cores={this.PhysicalCores} Threads={this.LogicalCores} {val}".TrimEnd());

@@ -1,5 +1,4 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
-using System.Collections.Generic;
+using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
 
 namespace _2026_MT_Gerashchenko_A_S_Lab_2.Factories;
 
@@ -53,7 +52,7 @@ public class DefaultSystemDataFactory : ISystemDataFactory
     ];
 
     public ServerConfiguration CreateServerConfiguration() =>
-        new()
+        new ()
         {
             ProcessorModelId = 1,
             MemoryCapacityGb = 32.00m,

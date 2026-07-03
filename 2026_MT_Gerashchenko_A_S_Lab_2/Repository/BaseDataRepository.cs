@@ -1,11 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
 using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
 using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace _2026_MT_Gerashchenko_A_S_Lab_2.Repository;
 

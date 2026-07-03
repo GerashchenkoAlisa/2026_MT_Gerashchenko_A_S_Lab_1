@@ -1,6 +1,4 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
-using System.Threading.Tasks;
+﻿using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
 
 namespace _2026_MT_Gerashchenko_A_S_Lab_2.Repository;
 

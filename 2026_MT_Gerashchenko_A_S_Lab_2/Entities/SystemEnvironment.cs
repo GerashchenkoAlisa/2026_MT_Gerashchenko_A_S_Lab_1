@@ -1,4 +1,3 @@
-﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,7 +19,7 @@ public class SystemEnvironment : BaseEntity<int>
     [MaxLength(200)]
     public string? EnvironmentDetails { get; set; }
 
-    public virtual ICollection<ServerConfiguration> ServerConfigurations { get; } = [];
+    public virtual ICollection<ServerConfiguration> ServerConfigurations { get; } =[];
 
     public override string ToLogString(string val = "")
         => base.ToLogString($"{this.EnvironmentName} {val}".TrimEnd());

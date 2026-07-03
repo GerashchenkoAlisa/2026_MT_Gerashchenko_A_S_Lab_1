@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 
 namespace _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
 
@@ -48,7 +45,7 @@ public class BuildExecution : BaseEntity<int>
     [ForeignKey(nameof(ExecutionResultId))]
     public virtual ExecutionResult ExecutionResult { get; set; } = null!;
 
-    public virtual ICollection<BuildMessage> BuildMessages { get; } = [];
+    public virtual ICollection<BuildMessage> BuildMessages { get; } =[];
 
     public override string ToLogString(string val = "")
         => base.ToLogString($"[{this.ExecutionResult?.ResultName}] App={this.ApplicationId} Stage={this.ProcessStageId} {val}".TrimEnd());

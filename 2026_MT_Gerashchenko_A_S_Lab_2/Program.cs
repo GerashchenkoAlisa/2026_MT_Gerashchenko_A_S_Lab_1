@@ -1,11 +1,8 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
+using System.Globalization;
+using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
 using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
 using _2026_MT_Gerashchenko_A_S_Lab_2.Factories;
 using _2026_MT_Gerashchenko_A_S_Lab_2.UnitsOfWork;
-using System;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -395,4 +392,3 @@ public static class Program
         Console.WriteLine(text);
     }
 }
-

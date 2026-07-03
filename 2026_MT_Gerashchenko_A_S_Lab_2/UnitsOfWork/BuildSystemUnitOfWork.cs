@@ -2,8 +2,6 @@
 using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
 using _2026_MT_Gerashchenko_A_S_Lab_2.Repository;
 using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using System.Threading.Tasks;
 
 namespace _2026_MT_Gerashchenko_A_S_Lab_2.UnitsOfWork;
 
