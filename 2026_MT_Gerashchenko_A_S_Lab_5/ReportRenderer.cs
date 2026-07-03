@@ -58,7 +58,7 @@ public static class ReportRenderer
 
     public static void RenderAnomalies(List<AnomalyEntry> anomalies)
     {
-        if (!anomalies.Any())
+        if (anomalies.Count==0)
         {
             AnsiConsole.MarkupLine("[green]Аномалий не найдено.[/]");
             return;
@@ -147,7 +147,7 @@ public static class ReportRenderer
         AnsiConsole.Write(table);
     }
 
-    public static void RenderDashboard(AnalyticsService analytics)
+    public static void RenderDashboard()
     {
         var layout = new Layout("Root");
 

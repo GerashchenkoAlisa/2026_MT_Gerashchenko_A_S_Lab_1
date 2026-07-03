@@ -5,20 +5,15 @@ using Spectre.Console;
 
 namespace _2026_MT_Gerashchenko_A_S_Lab_5;
 
-public class AnalyticsService
+public class AnalyticsService(IBuildSystemUnitOfWork uow)
 {
-    private readonly IBuildSystemUnitOfWork _uow;
-    private List<PerformanceMetric> _metrics = new();
-
-    public AnalyticsService(IBuildSystemUnitOfWork uow)
-    {
-        _uow = uow;
-    }
+    private readonly IBuildSystemUnitOfWork _uow = uow;
+    private List<PerformanceMetric> _metrics = [];
 
     public async Task LoadDataAsync()
     {
         var all = await _uow.PerformanceMetrics.GetAllAsync();
-        _metrics = all.ToList();
+        _metrics = [.. all];
 
         AnsiConsole.MarkupLine(
             $"[green]Загружено {_metrics.Count} записей производительности.[/]");
@@ -28,7 +23,7 @@ public class AnalyticsService
 
     public List<TopMethodEntry> GetTopEfficientMethods(int size = 2000)
     {
-        return _metrics
+        return [.. _metrics
             .Where(m => m.BenchmarkTest.TestDescription.Contains(size.ToString()))
             .OrderBy(m => m.SingleThreadTimeMs)
             .Take(3)
@@ -39,8 +34,7 @@ public class AnalyticsService
                 Processor: m.ServerConfiguration?.ProcessorModel?.ProcessorName ?? "Unknown",
                 Algorithm: m.BenchmarkTest.TestDescription,
                 IsParallel: false
-            ))
-            .ToList();
+            ))];
     }
 
     // 2. Среднее ускорение
@@ -59,7 +53,7 @@ public class AnalyticsService
 
     public List<AnomalyEntry> FindAnomalies()
     {
-        return _metrics
+        return [.. _metrics
             .Where(m => m.MultiThreadTimeMs > m.SingleThreadTimeMs)
             .OrderByDescending(m => m.MultiThreadTimeMs - m.SingleThreadTimeMs)
             .Select(m => new AnomalyEntry(
@@ -67,15 +61,14 @@ public class AnalyticsService
                 SingleMs: m.SingleThreadTimeMs,
                 MultiMs: m.MultiThreadTimeMs,
                 Overhead: m.MultiThreadTimeMs - m.SingleThreadTimeMs
-            ))
-            .ToList();
+            ))];
     }
 
     // 4. Сравнение процессоров
 
     public List<EnvironmentEntry> CompareEnvironments()
     {
-        return _metrics
+        return [.. _metrics
             .GroupBy(m =>
                 m.ServerConfiguration?.ProcessorModel?.ProcessorName ?? "Unknown")
             .Select(g => new EnvironmentEntry(
@@ -84,34 +77,31 @@ public class AnalyticsService
                 AvgMulti: g.Average(x => x.MultiThreadTimeMs),
                 Count: g.Count()
             ))
-            .OrderBy(x => x.AvgSingle)
-            .ToList();
+            .OrderBy(x => x.AvgSingle)];
     }
 
     // 5. Лучшая структура
 
     public List<BestStructureEntry> GetBestStructureBySize()
     {
-        return _metrics
+        return [.. _metrics
             .GroupBy(m => m.BenchmarkTest.TestDescription)
             .Select(g => new BestStructureEntry(
                 SizeGroup: g.Key,
                 BestGain: g.Max(x => x.PerformanceGain)
-            ))
-            .ToList();
+            ))];
     }
 
     // 6. Сравнение порядков
 
     public List<OrderComparisonEntry> CompareMultiplicationOrders()
     {
-        return _metrics
+        return [.. _metrics
             .GroupBy(m => m.BenchmarkTest.TestDescription)
             .Select(g => new OrderComparisonEntry(
                 Test: g.Key,
                 AvgTime: g.Average(x => x.SingleThreadTimeMs)
             ))
-            .OrderBy(x => x.AvgTime)
-            .ToList();
+            .OrderBy(x => x.AvgTime)];
     }
 }

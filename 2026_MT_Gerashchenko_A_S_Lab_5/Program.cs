@@ -11,7 +11,7 @@ namespace _2026_MT_Gerashchenko_A_S_Lab_5;
 
 class Program
 {
-    static async Task Main(string[] args)
+    static async Task Main()
     {
         AnsiConsole.Write(new FigletText("Lab 5 - Analytics").Color(Color.Cyan1));
 
@@ -67,7 +67,7 @@ class Program
                     case '4': ReportRenderer.RenderEnvironmentComparison(analytics.CompareEnvironments()); break;
                     case '5': ReportRenderer.RenderBestStructure(analytics.GetBestStructureBySize()); break;
                     case '6': ReportRenderer.RenderOrderComparison(analytics.CompareMultiplicationOrders()); break;
-                    case '7': ReportRenderer.RenderDashboard(analytics); break;
+                    case '7': ReportRenderer.RenderDashboard(); break;
                 }
             }
             catch (Exception ex)
