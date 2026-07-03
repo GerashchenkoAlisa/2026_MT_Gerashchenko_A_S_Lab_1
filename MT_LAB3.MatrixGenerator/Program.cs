@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using MT_LAB3.MatrixLib;
 
 namespace MT_LAB3.MatrixGenerator;
@@ -8,7 +8,7 @@ internal static class Program
     private static readonly string OutputDir = Path.Combine(
         AppContext.BaseDirectory, "..", "..", "..", "..", "matrices");
 
-    static void Main()
+    private static void Main()
     {
         Directory.CreateDirectory(OutputDir);
 
@@ -34,14 +34,14 @@ internal static class Program
     private static void GenerateFixed10x10Int()
     {
         var m = new RectMatrix<int>(10, 10);
-        m.Fill((i, j) => i * 10 + j + 1);
+        m.Fill((i, j) => (i * 10) + j + 1);
         SaveMatrix(m, "matrix_10x10_int.bin");
     }
 
     private static void GenerateFixed10x10Double()
     {
         var m = new RectMatrix<double>(10, 10);
-        m.Fill((i, j) => (i + 1) + (j + 1) * 0.1);
+        m.Fill((i, j) => (i + 1) + ((j + 1) * 0.1));
         SaveMatrix(m, "matrix_10x10_double.bin");
     }
 
@@ -54,12 +54,29 @@ internal static class Program
         SaveMatrix(m, filename);
     }
 
-    private static T GenerateRandomValue<T>(Random rng) where T : INumber<T>
+    private static T GenerateRandomValue<T>(Random rng)
+        where T : INumber<T>
     {
-        if (typeof(T) == typeof(int)) return T.CreateChecked(rng.Next(1, 100));
-        if (typeof(T) == typeof(double)) return T.CreateChecked(rng.NextDouble() * 100.0);
-        if (typeof(T) == typeof(float)) return T.CreateChecked((float)(rng.NextDouble() * 100.0));
-        if (typeof(T) == typeof(long)) return T.CreateChecked(rng.NextInt64(1, 100));
+        if (typeof(T) == typeof(int))
+        {
+            return T.CreateChecked(rng.Next(1, 100));
+        }
+
+        if (typeof(T) == typeof(double))
+        {
+            return T.CreateChecked(rng.NextDouble() * 100.0);
+        }
+
+        if (typeof(T) == typeof(float))
+        {
+            return T.CreateChecked((float)(rng.NextDouble() * 100.0));
+        }
+
+        if (typeof(T) == typeof(long))
+        {
+            return T.CreateChecked(rng.NextInt64(1, 100));
+        }
+
         throw new NotSupportedException($"Random generation for {typeof(T).Name} is not supported.");
     }
 
