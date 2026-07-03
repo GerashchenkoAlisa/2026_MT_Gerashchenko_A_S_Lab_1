@@ -1,5 +1,5 @@
-﻿using Spectre.Console;
-using _2026_MT_Gerashchenko_A_S_Lab_5.Models;
+﻿using _2026_MT_Gerashchenko_A_S_Lab_5.Models;
+using Spectre.Console;
 
 namespace _2026_MT_Gerashchenko_A_S_Lab_5;
 
@@ -20,16 +20,15 @@ public static class ReportRenderer
 
         foreach (var item in data)
         {
-            var color = item.TimeMs < 1000 ? "green" : "yellow";
+            var color = item.timeMs < 1000 ? "green" : "yellow";
 
             table.AddRow(
-                item.Test,
-                item.Algorithm,
-                $"[{color}]{item.TimeMs}[/]",
-                $"{item.Gain:F2}",
-                item.IsParallel ? "[cyan]Да[/]" : "[grey]Нет[/]",
-                item.Processor
-            );
+                item.test,
+                item.algorithm,
+                $"[{color}]{item.timeMs}[/]",
+                $"{item.gain:F2}",
+                item.isParallel ? "[cyan]Да[/]" : "[grey]Нет[/]",
+                item.processor);
         }
 
         AnsiConsole.Write(table);
@@ -58,7 +57,7 @@ public static class ReportRenderer
 
     public static void RenderAnomalies(List<AnomalyEntry> anomalies)
     {
-        if (anomalies.Count==0)
+        if (anomalies.Count == 0)
         {
             AnsiConsole.MarkupLine("[green]Аномалий не найдено.[/]");
             return;
@@ -76,11 +75,10 @@ public static class ReportRenderer
         foreach (var item in anomalies.Take(10))
         {
             table.AddRow(
-                item.Test,
-                item.SingleMs.ToString(),
-                item.MultiMs.ToString(),
-                $"[red]{item.Overhead}[/]"
-            );
+                item.test,
+                item.singleMs.ToString(),
+                item.multiMs.ToString(),
+                $"[red]{item.overhead}[/]");
         }
 
         AnsiConsole.Write(table);
@@ -99,12 +97,10 @@ public static class ReportRenderer
 
         foreach (var item in data)
         {
-            table.AddRow(
-                item.Processor,
-                item.AvgSingle.ToString("F0"),
-                item.AvgMulti.ToString("F0"),
-                item.Count.ToString()
-            );
+            table.AddRow(item.processor,
+                         item.avgSingle.ToString("F0"),
+                         item.avgMulti.ToString("F0"),
+                         item.count.ToString());
         }
 
         AnsiConsole.Write(table);
@@ -119,8 +115,8 @@ public static class ReportRenderer
         foreach (var item in data)
         {
             chart.AddItem(
-                item.SizeGroup,
-                (double)item.BestGain,
+                item.sizeGroup,
+                (double)item.bestGain,
                 Color.Cyan1);
         }
 
@@ -138,10 +134,8 @@ public static class ReportRenderer
 
         foreach (var item in data)
         {
-            table.AddRow(
-                item.Test,
-                item.AvgTime.ToString("F0")
-            );
+            table.AddRow(item.test,
+                         item.avgTime.ToString("F0"));
         }
 
         AnsiConsole.Write(table);

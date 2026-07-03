@@ -1,17 +1,17 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
 using _2026_MT_Gerashchenko_A_S_Lab_2.UnitsOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console;
-using System;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace _2026_MT_Gerashchenko_A_S_Lab_5;
 
-class Program
+internal class Program
 {
-    static async Task Main()
+    private static async Task Main()
     {
         AnsiConsole.Write(new FigletText("Lab 5 - Analytics").Color(Color.Cyan1));
 
@@ -51,10 +51,12 @@ class Program
                         "5. Лучшая структура по размеру",
                         "6. Сравнение порядков умножения",
                         "7. Dashboard",
-                        "Выход"
-                    ));
+                        "Выход"));
 
-            if (choice == "Выход") break;
+            if (choice == "Выход")
+            {
+                break;
+            }
 
             AnsiConsole.Clear();
             try
