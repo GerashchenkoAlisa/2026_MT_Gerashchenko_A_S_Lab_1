@@ -4,7 +4,7 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
+namespace Migrations
 {
     /// <inheritdoc />
     public partial class RemoveHasDataSeeding : Migration

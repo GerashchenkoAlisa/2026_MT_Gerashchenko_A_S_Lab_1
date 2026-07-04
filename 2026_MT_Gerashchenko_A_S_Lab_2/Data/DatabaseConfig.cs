@@ -1,6 +1,6 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+﻿using Entities;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Data;
+namespace Data;
 
 public static class DatabaseConfig
 {

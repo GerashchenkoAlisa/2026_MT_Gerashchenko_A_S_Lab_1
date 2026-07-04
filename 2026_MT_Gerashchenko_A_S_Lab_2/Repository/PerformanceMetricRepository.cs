@@ -1,11 +1,11 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+﻿using Data;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Repository;
+namespace Repository;
 
 public class PerformanceMetricRepository(BuildSystemDbContext context)
     : BaseDataRepository<PerformanceMetric>(context), IPerformanceMetricRepository
