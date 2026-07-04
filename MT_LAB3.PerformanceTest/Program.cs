@@ -24,14 +24,15 @@ internal sealed record BenchResult(
 
 internal static class Program
 {
+    private const decimal RamGb = 0m;
+
     private static readonly List<BenchResult> Results =
         [];
 
+    private static readonly int PhysCores = Environment.ProcessorCount / 2;
+    private static readonly int LogCores = Environment.ProcessorCount;
+    private static readonly string OsName = Environment.OSVersion.ToString();
     private static string cpuModelName = "Unknown CPU";
-    private static int physCores = Environment.ProcessorCount / 2;
-    private static int logCores = Environment.ProcessorCount;
-    private static decimal ramGb = 0m;
-    private static string osName = Environment.OSVersion.ToString();
 
     private static string ResolveDbPath()
     {
@@ -87,17 +88,17 @@ internal static class Program
     {
         Console.WriteLine(new string('-', 50));
         Console.WriteLine($"   CPU  : {cpuModelName}");
-        Console.WriteLine($"   Cores: {physCores} physical / {logCores} logical");
-        Console.WriteLine($"   RAM  : {(ramGb > 0 ? $"{ramGb} GB" : "unknown")}");
-        Console.WriteLine($"   OS   : {osName}");
+        Console.WriteLine($"   Cores: {PhysCores} physical / {LogCores} logical");
+        Console.WriteLine(RamGb > 0 ? $"RAM  : {RamGb} GB" : "RAM  : unknown");
+        Console.WriteLine($"   OS   : {OsName}");
     }
 
     private static void RunBenchmarkForSize(int size)
     {
         var rng = new Random(1);
-        var (rA, rB) = MakePair<int>(size, rng, (r, c) => new RectMatrix<int>(r, c));
-        var (jA, jB) = MakePair<int>(size, rng, (r, c) => new JaggedMatrix<int>(r, c));
-        var (fA, fB) = MakePair<int>(size, rng, (r, c) => new FlatMatrix<int>(r, c));
+        var (rA, rB) = MakePair<int>(size, (r, c) => new RectMatrix<int>(r, c));
+        var (jA, jB) = MakePair<int>(size, (r, c) => new JaggedMatrix<int>(r, c));
+        var (fA, fB) = MakePair<int>(size, (r, c) => new FlatMatrix<int>(r, c));
 
         var triples = new (string name, IMatrix<int> a, IMatrix<int> b)[]
         {
@@ -180,7 +181,7 @@ internal static class Program
 
         foreach (int size in sizes)
         {
-            var (a, b) = MakePair<int>(size, rng, (r, c) => new RectMatrix<int>(r, c));
+            var (a, b) = MakePair<int>(size, (r, c) => new RectMatrix<int>(r, c));
 
             long seqUs = MedianMicros(Runs, () => a.AddByRowsSequential(b));
             long parUs = MedianMicros(Runs, () => a.AddByRowsParallel(b));
@@ -262,8 +263,8 @@ internal static class Program
                             .FirstOrDefault() ?? new ProcessorModel
                             {
                                 ProcessorName = cpuModelName,
-                                PhysicalCores = physCores,
-                                LogicalCores = logCores,
+                                PhysicalCores = PhysCores,
+                                LogicalCores = LogCores,
                             };
 
             if (processor.ProcessorModelId == 0)
@@ -272,8 +273,8 @@ internal static class Program
                 await uow.SaveChangesAsync();
             }
 
-            var env = (await uow.SystemEnvironments.FindAsync(e => e.EnvironmentName == osName))
-                      .FirstOrDefault() ?? new SystemEnvironment { EnvironmentName = osName };
+            var env = (await uow.SystemEnvironments.FindAsync(e => e.EnvironmentName == OsName))
+                      .FirstOrDefault() ?? new SystemEnvironment { EnvironmentName = OsName };
 
             if (env.SystemEnvironmentId == 0)
             {
@@ -321,7 +322,7 @@ internal static class Program
         }
     }
 
-    private static (IMatrix<T> a, IMatrix<T> b) MakePair<T>(int size, Random rng, Func<int, int, IMatrix<T>> factory)
+    private static (IMatrix<T> a, IMatrix<T> b) MakePair<T>(int size, Func<int, int, IMatrix<T>> factory)
         where T : INumber<T>
     {
         var a = factory(size, size);

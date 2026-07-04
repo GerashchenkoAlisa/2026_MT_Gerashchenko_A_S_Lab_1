@@ -6,21 +6,15 @@ namespace MTLAB3.MatrixLib;
 
 using System.Numerics;
 using MTLAB3.MatrixLib;
-public sealed class FlatMatrix<T> : MatrixBase<T>
+public sealed class FlatMatrix<T>(int rows, int cols)
+    : MatrixBase<T>
     where T : INumber<T>
 {
-    private readonly T[] data;
+    private readonly T[] data = new T[rows * cols];
 
-    public FlatMatrix(int rows, int cols)
-    {
-        this.Rows = rows;
-        this.Cols = cols;
-        this.data = new T[rows * cols];
-    }
+    public override int Rows { get; } = rows;
 
-    public override int Rows { get; }
-
-    public override int Cols { get; }
+    public override int Cols { get; } = cols;
 
     public override T this[int row, int col]
     {
