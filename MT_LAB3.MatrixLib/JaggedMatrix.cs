@@ -1,11 +1,15 @@
-using System.Numerics;
-using MT_LAB3.MatrixLib;
+// <copyright file="JaggedMatrix.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
-namespace MT_LAB3.MatrixLib;
+using System.Numerics;
+using MTLAB3.MatrixLib;
+
+namespace MTLAB3.MatrixLib;
 public sealed class JaggedMatrix<T> : MatrixBase<T>
     where T : INumber<T>
 {
-    private readonly T[][] _data;
+    private readonly T[][] data;
 
     public override int Rows { get; }
 
@@ -13,18 +17,18 @@ public sealed class JaggedMatrix<T> : MatrixBase<T>
 
     public override T this[int row, int col]
     {
-        get => this._data[row][col];
-        set => this._data[row][col] = value;
+        get => this.data[row][col];
+        set => this.data[row][col] = value;
     }
 
     public JaggedMatrix(int rows, int cols)
     {
         this.Rows = rows;
         this.Cols = cols;
-        this._data = new T[rows][];
+        this.data = new T[rows][];
         for (int i = 0; i < rows; i++)
         {
-            this._data[i] = new T[cols];
+            this.data[i] = new T[cols];
         }
     }
 

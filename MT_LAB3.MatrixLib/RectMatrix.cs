@@ -1,7 +1,11 @@
-using System.Numerics;
-using MT_LAB3.MatrixLib;
+// <copyright file="RectMatrix.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
-namespace MT_LAB3.MatrixLib;
+using System.Numerics;
+using MTLAB3.MatrixLib;
+
+namespace MTLAB3.MatrixLib;
 
 public sealed class RectMatrix<T>(int rows, int cols) : MatrixBase<T>
     where T : INumber<T>

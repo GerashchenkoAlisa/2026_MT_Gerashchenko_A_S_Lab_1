@@ -1,24 +1,31 @@
+// <copyright file="Program.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.Diagnostics;
 using System.Numerics;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
-using _2026_MT_Gerashchenko_A_S_Lab_2.UnitsOfWork;
+using System.Security.Cryptography;
+using Data;
+using Entities;
+using MatrixLib;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using MT_LAB3.MatrixLib;
+using MTLAB3.MatrixLib;
+using UnitsOfWork;
 
-namespace MT_LAB3.PerformanceTest;
+namespace MTLAB3.PerformanceTest;
 
 internal sealed record BenchResult(
     int Size,
     string TestType,
     string Algorithm,
     string Storage,
-    long microseconds);
+    long Microseconds);
 
 internal static class Program
 {
-    private static readonly List<BenchResult> Results = [];
+    private static readonly List<BenchResult> Results =
+        [];
 
     private static string cpuModelName = "Unknown CPU";
     private static int physCores = Environment.ProcessorCount / 2;
@@ -67,7 +74,6 @@ internal static class Program
         PrintSummary();
         await SaveResultsToDatabaseAsync().ConfigureAwait(false);
 
-        Console.WriteLine("\nPress any key to exit...");
         Console.ReadKey();
     }
 
@@ -79,7 +85,6 @@ internal static class Program
 
     private static void PrintSystemInfo()
     {
-        Console.WriteLine("\nsystem information");
         Console.WriteLine(new string('-', 50));
         Console.WriteLine($"   CPU  : {cpuModelName}");
         Console.WriteLine($"   Cores: {physCores} physical / {logCores} logical");
@@ -162,10 +167,10 @@ internal static class Program
 
     private static void FindBreakevenPoint()
     {
-        Console.WriteLine("\nBREAKEVEN ANALYSIS - AddByRows parallel vs sequential");
         Console.WriteLine(new string('-', 65));
 
-        int[] sizes = [10, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+        int[] sizes =
+            [10, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
         const int Runs = 5;
         const int ConsecutiveReq = 3;
 
@@ -201,7 +206,6 @@ internal static class Program
 
         if (breakevenN is null)
         {
-            Console.WriteLine("\n   No stable breakeven found within tested sizes.");
         }
     }
 
@@ -223,7 +227,6 @@ internal static class Program
 
     private static void PrintSummary()
     {
-        Console.WriteLine("\nperformance summary (median us, averaged across storage types)");
         Console.WriteLine(new string('-', 72));
 
         foreach (var g in Results.GroupBy(r => new { r.Size, r.TestType, r.Algorithm })
@@ -231,7 +234,7 @@ internal static class Program
             .ThenBy(g => g.Key.TestType)
             .ThenBy(g => g.Key.Algorithm))
         {
-            double avg = g.Average(r => r.microseconds);
+            double avg = g.Average(r => r.Microseconds);
             Console.WriteLine($"   {g.Key.Size,5}x{g.Key.Size} | {g.Key.Algorithm,-25} | {avg,8:F0} us");
         }
     }
@@ -289,8 +292,8 @@ internal static class Program
                     BenchmarkTestId = benchmark.BenchmarkTestId,
                     ServerConfigurationId = 1,
                     BuildExecutionId = 1,
-                    SingleThreadTimeMs = r.microseconds / 1000,
-                    MultiThreadTimeMs = r.microseconds / 1000,
+                    SingleThreadTimeMs = r.Microseconds / 1000,
+                    MultiThreadTimeMs = r.Microseconds / 1000,
                     MetricRecordTime = DateTime.UtcNow,
                 };
                 await uow.PerformanceMetrics.AddAsync(metric);
@@ -300,7 +303,7 @@ internal static class Program
             success = true;
             Console.WriteLine($"Saved {Results.Count} performance records to DB.");
         }
-        catch (Exception ex)
+        catch (ArgumentException ex)
         {
             Console.WriteLine($"DB save failed: {ex.Message}");
         }
@@ -309,7 +312,6 @@ internal static class Program
             if (success)
             {
                 File.Copy(tmpDb, dbPath, overwrite: true);
-                Console.WriteLine("Database updated successfully.");
             }
 
             if (File.Exists(tmpDb))
@@ -324,13 +326,34 @@ internal static class Program
     {
         var a = factory(size, size);
         var b = factory(size, size);
-        a.Fill((_, _) => T.CreateChecked(rng.Next(1, 100)));
-        b.Fill((_, _) => T.CreateChecked(rng.Next(1, 100)));
+
+        FillMatrixWithSecureRandom(a);
+        FillMatrixWithSecureRandom(b);
+
         return (a, b);
+
+        static void FillMatrixWithSecureRandom(IMatrix<T> matrix)
+        {
+            var buffer = new byte[sizeof(int)];
+            for (int i = 0; i < matrix.Rows; i++)
+            {
+                for (int j = 0; j < matrix.Cols; j++)
+                {
+                    int value;
+                    do
+                    {
+                        RandomNumberGenerator.Fill(buffer);
+                        value = BitConverter.ToInt32(buffer, 0) & int.MaxValue;
+                        value = 1 + (value % 99); 
+                    } while (value < 1 || value > 99);
+
+                    matrix.Fill((row, col) => row == i && col == j ? T.CreateChecked(value) : matrix[row, col]);
+                }
+            }
+        }
     }
 
     private static void PrintBanner()
     {
-        Console.WriteLine("matrix performance test suite v3.0");
     }
 }

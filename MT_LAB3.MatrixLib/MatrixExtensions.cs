@@ -1,12 +1,18 @@
-using System.Numerics;
-using MT_LAB3.MatrixLib;
+// <copyright file="MatrixExtensions.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
-namespace MT_LAB3.MatrixLib;
+using System.Numerics;
+using MTLAB3.MatrixLib;
+
+namespace MatrixLib;
 public static class MatrixExtensions
 {
     public static void SaveToBinaryFile<T>(this IMatrix<T> matrix, string path)
         where T : INumber<T>
     {
+        ArgumentNullException.ThrowIfNull(matrix);
+
         using var writer = new BinaryWriter(File.OpenWrite(path));
         writer.Write(matrix.Rows);
         writer.Write(matrix.Cols);
@@ -58,6 +64,8 @@ public static class MatrixExtensions
     public static bool MatrixEquals<T>(this IMatrix<T> a, IMatrix<T> b, T tolerance)
         where T : INumber<T>
     {
+        ArgumentNullException.ThrowIfNull(a);
+        ArgumentNullException.ThrowIfNull(b);
         if (a is MatrixBase<T> baseA)
         {
             return baseA.MatrixEquals(b, tolerance);
@@ -90,6 +98,8 @@ public static class MatrixExtensions
     public static void Fill<T>(this IMatrix<T> matrix, Func<int, int, T> valueSelector)
         where T : INumber<T>
     {
+        ArgumentNullException.ThrowIfNull(matrix);
+        ArgumentNullException.ThrowIfNull(valueSelector);
         for (int i = 0; i < matrix.Rows; i++)
         {
             for (int j = 0; j < matrix.Cols; j++)

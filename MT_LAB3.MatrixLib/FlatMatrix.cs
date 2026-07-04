@@ -1,11 +1,15 @@
-using System.Numerics;
-using MT_LAB3.MatrixLib;
+// <copyright file="FlatMatrix.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
-namespace MT_LAB3.MatrixLib;
+namespace MTLAB3.MatrixLib;
+
+using System.Numerics;
+using MTLAB3.MatrixLib;
 public sealed class FlatMatrix<T> : MatrixBase<T>
     where T : INumber<T>
 {
-    private readonly T[] _data;
+    private readonly T[] data;
 
     public override int Rows { get; }
 
@@ -13,15 +17,15 @@ public sealed class FlatMatrix<T> : MatrixBase<T>
 
     public override T this[int row, int col]
     {
-        get => this._data[(row * this.Cols) + col];
-        set => this._data[(row * this.Cols) + col] = value;
+        get => this.data[(row * this.Cols) + col];
+        set => this.data[(row * this.Cols) + col] = value;
     }
 
     public FlatMatrix(int rows, int cols)
     {
         this.Rows = rows;
         this.Cols = cols;
-        this._data = new T[rows * cols];
+        this.data = new T[rows * cols];
     }
 
     protected override IMatrix<T> CreateSameType(int rows, int cols) =>

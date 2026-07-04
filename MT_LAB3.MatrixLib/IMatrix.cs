@@ -1,6 +1,10 @@
+// <copyright file="IMatrix.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.Numerics;
 
-namespace MT_LAB3.MatrixLib;
+namespace MTLAB3.MatrixLib;
 public interface IMatrix<T>
     where T : INumber<T>
 {

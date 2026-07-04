@@ -1,7 +1,11 @@
-using System.Numerics;
-using MT_LAB3.MatrixLib;
+// <copyright file="MatrixBase.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
-namespace MT_LAB3.MatrixLib;
+using System.Numerics;
+using MTLAB3.MatrixLib;
+
+namespace MTLAB3.MatrixLib;
 public abstract class MatrixBase<T> : IMatrix<T>
     where T : INumber<T>
 {
@@ -11,12 +15,9 @@ public abstract class MatrixBase<T> : IMatrix<T>
 
     public abstract T this[int row, int col] { get; set; }
 
-    protected abstract IMatrix<T> CreateSameType(int rows, int cols);
-
-    protected IMatrix<T> CreateSameType() => this.CreateSameType(this.Rows, this.Cols);
-
     protected static IMatrix<T> LoadFromBinaryFileCore(string path, Func<int, int, MatrixBase<T>> factory)
     {
+        ArgumentNullException.ThrowIfNull(factory);
         using var reader = new BinaryReader(File.OpenRead(path));
         int rows = reader.ReadInt32();
         int cols = reader.ReadInt32();
@@ -62,8 +63,13 @@ public abstract class MatrixBase<T> : IMatrix<T>
         throw new NotSupportedException($"Binary reading for type {typeof(T).Name} is not supported.");
     }
 
+    protected abstract IMatrix<T> CreateSameType(int rows, int cols);
+
+    protected IMatrix<T> CreateSameType() => this.CreateSameType(this.Rows, this.Cols);
+
     public IMatrix<T> AddByRowsSequential(IMatrix<T> other)
     {
+        ArgumentNullException.ThrowIfNull(other);
         this.ValidateSameDimensions(other);
         var result = this.CreateSameType();
         for (int i = 0; i < this.Rows; i++)
@@ -79,6 +85,7 @@ public abstract class MatrixBase<T> : IMatrix<T>
 
     public IMatrix<T> AddByRowsParallel(IMatrix<T> other)
     {
+        ArgumentNullException.ThrowIfNull(other);
         this.ValidateSameDimensions(other);
         var result = this.CreateSameType();
         Parallel.For(0, this.Rows, i =>
@@ -93,6 +100,7 @@ public abstract class MatrixBase<T> : IMatrix<T>
 
     public IMatrix<T> AddByColumnsSequential(IMatrix<T> other)
     {
+        ArgumentNullException.ThrowIfNull(other);
         this.ValidateSameDimensions(other);
         var result = this.CreateSameType();
         for (int j = 0; j < this.Cols; j++)
@@ -108,6 +116,7 @@ public abstract class MatrixBase<T> : IMatrix<T>
 
     public IMatrix<T> AddByColumnsParallel(IMatrix<T> other)
     {
+        ArgumentNullException.ThrowIfNull(other);
         this.ValidateSameDimensions(other);
         var result = this.CreateSameType();
         Parallel.For(0, this.Cols, j =>
@@ -122,6 +131,7 @@ public abstract class MatrixBase<T> : IMatrix<T>
 
     public IMatrix<T> MultiplySequential(IMatrix<T> other)
     {
+        ArgumentNullException.ThrowIfNull(other);
         this.ValidateMultiplicationDimensions(other);
         var result = this.CreateSameType(this.Rows, other.Cols);
         for (int i = 0; i < this.Rows; i++)
@@ -143,6 +153,7 @@ public abstract class MatrixBase<T> : IMatrix<T>
 
     public IMatrix<T> MultiplyParallel(IMatrix<T> other)
     {
+        ArgumentNullException.ThrowIfNull(other);
         this.ValidateMultiplicationDimensions(other);
         var result = this.CreateSameType(this.Rows, other.Cols);
         Parallel.For(0, this.Rows, i =>
@@ -163,6 +174,7 @@ public abstract class MatrixBase<T> : IMatrix<T>
 
     public IMatrix<T> MultiplyOptimSequential(IMatrix<T> other)
     {
+        ArgumentNullException.ThrowIfNull(other);
         this.ValidateMultiplicationDimensions(other);
         var result = this.CreateSameType(this.Rows, other.Cols);
         for (int i = 0; i < this.Rows; i++)
@@ -182,6 +194,7 @@ public abstract class MatrixBase<T> : IMatrix<T>
 
     public IMatrix<T> MultiplyOptimParallel(IMatrix<T> other)
     {
+        ArgumentNullException.ThrowIfNull(other);
         this.ValidateMultiplicationDimensions(other);
         var result = this.CreateSameType(this.Rows, other.Cols);
         Parallel.For(0, this.Rows, i =>
@@ -200,6 +213,7 @@ public abstract class MatrixBase<T> : IMatrix<T>
 
     public IMatrix<T> MultiplyNaiveSequential(IMatrix<T> other)
     {
+        ArgumentNullException.ThrowIfNull(other);
         this.ValidateMultiplicationDimensions(other);
         var result = this.CreateSameType(this.Rows, other.Cols);
         for (int j = 0; j < other.Cols; j++)
@@ -221,6 +235,7 @@ public abstract class MatrixBase<T> : IMatrix<T>
 
     public IMatrix<T> MultiplyNaiveParallel(IMatrix<T> other)
     {
+        ArgumentNullException.ThrowIfNull(other);
         this.ValidateMultiplicationDimensions(other);
         var result = this.CreateSameType(this.Rows, other.Cols);
         Parallel.For(0, other.Cols, j =>
