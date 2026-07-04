@@ -2,8 +2,9 @@
 using Infrastructure;
 using Models;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_4.Services;
-public sealed class HttpProcessor(IHttpClientFactory httpClientFactory) : IHttpProcessor
+namespace Services;
+public sealed class HttpProcessor(IHttpClientFactory httpClientFactory)
+    : IHttpProcessor
 {
     private const long MaxDownloadBytes = 10 * 1024 * 1024;
 
@@ -86,7 +87,7 @@ public sealed class HttpProcessor(IHttpClientFactory httpClientFactory) : IHttpP
 
     private async Task<DownloadResult> DownloadUrlAsync(Uri url, string destinationDir, CancellationToken ct)
     {
-        var client = httpClientFactory.CreateClient();
+        using var client = httpClientFactory.CreateClient();
         var filePath = Path.Combine(destinationDir, FileNameSanitizer.Sanitize(url));
         var completed = false;
 

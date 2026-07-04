@@ -4,8 +4,6 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
-
 #nullable disable
 
 namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations

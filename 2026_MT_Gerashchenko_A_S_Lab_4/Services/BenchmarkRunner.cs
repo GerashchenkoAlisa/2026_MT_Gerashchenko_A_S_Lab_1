@@ -5,7 +5,8 @@ using Services;
 namespace Services;
 public sealed class BenchmarkRunner(IHttpProcessor processor, IConsoleWriter console)
 {
-    private static readonly int[] ParallelismLevels = [1, 10, 50];
+    private static readonly int[] ParallelismLevels =
+        [1, 10, 50];
 
     public async Task<IReadOnlyList<ScanRunResult>> RunScanBenchmarksAsync(
         IReadOnlyList<Uri> urls,

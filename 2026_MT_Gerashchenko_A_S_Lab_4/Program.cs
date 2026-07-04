@@ -1,7 +1,7 @@
 ﻿using Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
 using Persistence;
 using Services;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Lab4;
 
@@ -9,6 +9,8 @@ public static class Program
 {
     public static async Task<int> Main(string[] args)
     {
+        ArgumentNullException.ThrowIfNull(args);
+
         var services = new ServiceCollection();
         services.AddLab4Services("lab4.db");
 

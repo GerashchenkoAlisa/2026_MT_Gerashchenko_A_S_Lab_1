@@ -1,29 +1,14 @@
 using Data;
 using Entities;
-using UnitsOfWork;
 using Infrastructure;
-using Models;
 using Microsoft.EntityFrameworkCore;
+using Models;
+using UnitsOfWork;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Persistence;
 public sealed class MetricsPersistenceService(IBuildSystemUnitOfWork uow, BuildSystemDbContext dbContext)
 {
-    internal class PipelineStepExecution
-    {
-        public int ProjectId { get; set; }
-
-        public int StageTypeId { get; set; }
-
-        public int ExecutionStatusId { get; set; }
-
-        public DateTime StartedAt { get; set; }
-
-        public int DurationMs { get; set; }
-
-        public int ExitCode { get; set; }
-    }
-
     private const int DefaultStageTypeId = 4;
     private const int DefaultExecutionStatusId = 1;
 
@@ -128,5 +113,20 @@ public sealed class MetricsPersistenceService(IBuildSystemUnitOfWork uow, BuildS
         await uow.BenchmarkTests.AddAsync(test).ConfigureAwait(false);
         await uow.SaveChangesAsync().ConfigureAwait(false);
         return test;
+    }
+
+    internal class PipelineStepExecution
+    {
+        public int ProjectId { get; set; }
+
+        public int StageTypeId { get; set; }
+
+        public int ExecutionStatusId { get; set; }
+
+        public DateTime StartedAt { get; set; }
+
+        public int DurationMs { get; set; }
+
+        public int ExitCode { get; set; }
     }
 }
