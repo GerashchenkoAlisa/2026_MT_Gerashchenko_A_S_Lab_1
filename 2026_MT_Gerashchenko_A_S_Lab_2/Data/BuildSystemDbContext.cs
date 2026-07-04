@@ -1,7 +1,7 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+﻿using Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Data;
+namespace Data;
 
 public class BuildSystemDbContext : DbContext
 {

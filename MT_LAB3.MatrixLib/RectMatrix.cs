@@ -1,30 +1,34 @@
-﻿using System.Numerics;
-using MT_LAB3.MatrixLib;
+// <copyright file="RectMatrix.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
-namespace MT_LAB3.MatrixLib;
-public sealed class RectMatrix<T> : MatrixBase<T> where T : INumber<T>
+using System.Numerics;
+using MTLAB3.MatrixLib;
+
+namespace MTLAB3.MatrixLib;
+
+public sealed class RectMatrix<T>(int rows, int cols)
+    : MatrixBase<T>
+    where T : INumber<T>
 {
-    private readonly T[,] _data;
+    private readonly T[,] data =
+        new T[rows, cols];
 
-    public override int Rows { get; }
-    public override int Cols { get; }
+    public override int Rows { get; } = rows;
+
+    public override int Cols { get; } = cols;
 
     public override T this[int row, int col]
     {
-        get => _data[row, col];
-        set => _data[row, col] = value;
+        get => this.data[row, col];
+        set => this.data[row, col] = value;
     }
 
-    public RectMatrix(int rows, int cols)
+    public static IMatrix<T> LoadFromBinaryFile(string path)
     {
-        Rows = rows;
-        Cols = cols;
-        _data = new T[rows, cols];
+        return LoadFromBinaryFileCore(path, (r, c) => new RectMatrix<T>(r, c));
     }
 
     protected override IMatrix<T> CreateSameType(int rows, int cols) =>
         new RectMatrix<T>(rows, cols);
-
-    public static IMatrix<T> LoadFromBinaryFile(string path) =>
-        LoadFromBinaryFileCore(path, (r, c) => new RectMatrix<T>(r, c));
 }

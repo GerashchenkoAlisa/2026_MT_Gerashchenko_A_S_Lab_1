@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MT_LAB3.MatrixGenerator", "MT_LAB3.MatrixGenerator\MT_LAB3.MatrixGenerator.csproj", "{C162A703-4573-47D2-ABC8-76359FF6BD27}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTLAB3.MatrixGenerator", "MT_LAB3.MatrixGenerator\MTLAB3.MatrixGenerator.csproj", "{C162A703-4573-47D2-ABC8-76359FF6BD27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MT_LAB3.MatrixLib", "MT_LAB3.MatrixLib\MT_LAB3.MatrixLib.csproj", "{E52098BA-0BF0-4DD3-A500-7B8894F18F9F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTLAB3.MatrixLib", "MT_LAB3.MatrixLib\MTLAB3.MatrixLib.csproj", "{E52098BA-0BF0-4DD3-A500-7B8894F18F9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MT_LAB3.PerformanceTest", "MT_LAB3.PerformanceTest\MT_LAB3.PerformanceTest.csproj", "{B2E8CCEF-0383-4C06-932C-7ADF0904DC1D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTLAB3.PerformanceTest", "MT_LAB3.PerformanceTest\MTLAB3.PerformanceTest.csproj", "{B2E8CCEF-0383-4C06-932C-7ADF0904DC1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2026_MT_Gerashchenko_A_S_Lab_2", "2026_MT_Gerashchenko_A_S_Lab_2\2026_MT_Gerashchenko_A_S_Lab_2.csproj", "{581F55E2-2CB4-4BC2-98DF-5CC7670A803C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2026MTGerashchenkoASLab2", "2026_MT_Gerashchenko_A_S_Lab_2\2026MTGerashchenkoASLab2.csproj", "{581F55E2-2CB4-4BC2-98DF-5CC7670A803C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2026_MT_Gerashchenko_A_S_Lab_1", "2026_MT_Gerashchenko_A_S_Lab_1\2026_MT_Gerashchenko_A_S_Lab_1.csproj", "{15D6E96C-0EF6-4A2E-B473-88A3F670B992}"
 EndProject

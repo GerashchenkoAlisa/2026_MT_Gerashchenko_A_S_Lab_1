@@ -1,8 +1,8 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+﻿using Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Repository;
+namespace Repository;
 
 public interface IPerformanceMetricRepository : IDataRepository<PerformanceMetric>
 {

@@ -1,13 +1,19 @@
-﻿using System.Diagnostics;
+// <copyright file="Program.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using System.Diagnostics;
 using System.Numerics;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
-using _2026_MT_Gerashchenko_A_S_Lab_2.UnitsOfWork;
+using System.Security.Cryptography;
+using Data;
+using Entities;
+using MatrixLib;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using MT_LAB3.MatrixLib;
+using MTLAB3.MatrixLib;
+using UnitsOfWork;
 
-namespace MT_LAB3.PerformanceTest;
+namespace MTLAB3.PerformanceTest;
 
 internal sealed record BenchResult(
     int Size,
@@ -18,13 +24,14 @@ internal sealed record BenchResult(
 
 internal static class Program
 {
-    private static readonly List<BenchResult> Results = new();
+    private static readonly List<BenchResult> Results =
+        [];
 
-    private static string _cpuModelName = "Unknown CPU";
-    private static int _physCores = Environment.ProcessorCount / 2;
-    private static int _logCores = Environment.ProcessorCount;
-    private static decimal _ramGb = 0m;
-    private static string _osName = Environment.OSVersion.ToString();
+    private static string cpuModelName = "Unknown CPU";
+    private static int physCores = Environment.ProcessorCount / 2;
+    private static int logCores = Environment.ProcessorCount;
+    private static decimal ramGb = 0m;
+    private static string osName = Environment.OSVersion.ToString();
 
     private static string ResolveDbPath()
     {
@@ -33,21 +40,24 @@ internal static class Program
         string slnDir = Path.GetFullPath(Path.Combine(projDir, ".."));
 
         string[] candidates =
-        {
+        [
             Path.Combine(slnDir, "2026_MT_Gerashchenko_A_S_Lab_2", "app.db"),
             Path.Combine(slnDir, "..", "2026_MT_Gerashchenko_A_S_Lab_2", "app.db"),
-        };
+        ];
 
         foreach (string c in candidates)
         {
             string full = Path.GetFullPath(c);
-            if (File.Exists(full)) return full;
+            if (File.Exists(full))
+            {
+                return full;
+            }
         }
 
         return Path.GetFullPath(candidates[0]);
     }
 
-    static async Task Main()
+    private static async Task Main()
     {
         PrintBanner();
         CollectSystemInfo();
@@ -62,29 +72,27 @@ internal static class Program
 
         FindBreakevenPoint();
         PrintSummary();
-        await SaveResultsToDatabaseAsync();
+        await SaveResultsToDatabaseAsync().ConfigureAwait(false);
 
-        Console.WriteLine("\nPress any key to exit...");
         Console.ReadKey();
     }
 
-    static void CollectSystemInfo()
+    private static void CollectSystemInfo()
     {
-        _cpuModelName = Environment.GetEnvironmentVariable("processor_identifier")
+        cpuModelName = Environment.GetEnvironmentVariable("processor_identifier")
                         ?? "Unknown CPU";
     }
 
-    static void PrintSystemInfo()
+    private static void PrintSystemInfo()
     {
-        Console.WriteLine("\nsystem information");
         Console.WriteLine(new string('-', 50));
-        Console.WriteLine($"   CPU  : {_cpuModelName}");
-        Console.WriteLine($"   Cores: {_physCores} physical / {_logCores} logical");
-        Console.WriteLine($"   RAM  : {(_ramGb > 0 ? $"{_ramGb} GB" : "unknown")}");
-        Console.WriteLine($"   OS   : {_osName}");
+        Console.WriteLine($"   CPU  : {cpuModelName}");
+        Console.WriteLine($"   Cores: {physCores} physical / {logCores} logical");
+        Console.WriteLine($"   RAM  : {(ramGb > 0 ? $"{ramGb} GB" : "unknown")}");
+        Console.WriteLine($"   OS   : {osName}");
     }
 
-    static void RunBenchmarkForSize(int size)
+    private static void RunBenchmarkForSize(int size)
     {
         var rng = new Random(1);
         var (rA, rB) = MakePair<int>(size, rng, (r, c) => new RectMatrix<int>(r, c));
@@ -103,13 +111,17 @@ internal static class Program
             BenchmarkAddition(a, b, name, size);
 
             if (size <= 500)
+            {
                 BenchmarkMultiplication(a, b, name, size);
+            }
             else
+            {
                 Console.WriteLine($"   {name}: skipping multiplication for {size}x{size}");
+            }
         }
     }
 
-    static void BenchmarkAddition(IMatrix<int> a, IMatrix<int> b, string storage, int size)
+    private static void BenchmarkAddition(IMatrix<int> a, IMatrix<int> b, string storage, int size)
     {
         Measure("Addition", "AddByRowsSequential", storage, size, () => a.AddByRowsSequential(b));
         Measure("Addition", "AddByRowsParallel", storage, size, () => a.AddByRowsParallel(b));
@@ -117,7 +129,7 @@ internal static class Program
         Measure("Addition", "AddByColumnsParallel", storage, size, () => a.AddByColumnsParallel(b));
     }
 
-    static void BenchmarkMultiplication(IMatrix<int> a, IMatrix<int> b, string storage, int size)
+    private static void BenchmarkMultiplication(IMatrix<int> a, IMatrix<int> b, string storage, int size)
     {
         Measure("Multiply", "MultiplySequential", storage, size, () => a.MultiplySequential(b));
         Measure("Multiply", "MultiplyParallel", storage, size, () => a.MultiplyParallel(b));
@@ -127,12 +139,15 @@ internal static class Program
         Measure("Multiply", "MultiplyNaiveParallel", storage, size, () => a.MultiplyNaiveParallel(b));
     }
 
-    static void Measure(string testType, string algorithm, string storage, int size, Action action)
+    private static void Measure(string testType, string algorithm, string storage, int size, Action action)
     {
         const int Warmup = 1;
         const int Runs = 3;
 
-        for (int w = 0; w < Warmup; w++) action();
+        for (int w = 0; w < Warmup; w++)
+        {
+            action();
+        }
 
         var times = new long[Runs];
         for (int r = 0; r < Runs; r++)
@@ -150,12 +165,12 @@ internal static class Program
         Console.WriteLine($"   {storage,-14} | {algorithm,-25} | {median,8} us");
     }
 
-    static void FindBreakevenPoint()
+    private static void FindBreakevenPoint()
     {
-        Console.WriteLine("\nBREAKEVEN ANALYSIS - AddByRows parallel vs sequential");
         Console.WriteLine(new string('-', 65));
 
-        int[] sizes = { 10, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000 };
+        int[] sizes =
+            [10, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
         const int Runs = 5;
         const int ConsecutiveReq = 3;
 
@@ -190,10 +205,11 @@ internal static class Program
         }
 
         if (breakevenN is null)
-            Console.WriteLine("\n   No stable breakeven found within tested sizes.");
+        {
+        }
     }
 
-    static long MedianMicros(int runs, Action action)
+    private static long MedianMicros(int runs, Action action)
     {
         action();
         var times = new long[runs];
@@ -204,13 +220,13 @@ internal static class Program
             sw.Stop();
             times[i] = sw.ElapsedTicks * 1_000_000L / Stopwatch.Frequency;
         }
+
         Array.Sort(times);
         return times[runs / 2];
     }
 
-    static void PrintSummary()
+    private static void PrintSummary()
     {
-        Console.WriteLine("\nperformance summary (median us, averaged across storage types)");
         Console.WriteLine(new string('-', 72));
 
         foreach (var g in Results.GroupBy(r => new { r.Size, r.TestType, r.Algorithm })
@@ -223,7 +239,7 @@ internal static class Program
         }
     }
 
-    static async Task SaveResultsToDatabaseAsync()
+    private static async Task SaveResultsToDatabaseAsync()
     {
         string dbPath = ResolveDbPath();
         string tmpDb = Path.Combine(Path.GetTempPath(), $"lab3_{Guid.NewGuid():N}.db");
@@ -242,12 +258,12 @@ internal static class Program
 
         try
         {
-            var processor = (await uow.ProcessorModels.FindAsync(p => p.ProcessorName.Contains(_cpuModelName)))
+            var processor = (await uow.ProcessorModels.FindAsync(p => p.ProcessorName.Contains(cpuModelName)))
                             .FirstOrDefault() ?? new ProcessorModel
                             {
-                                ProcessorName = _cpuModelName,
-                                PhysicalCores = _physCores,
-                                LogicalCores = _logCores,
+                                ProcessorName = cpuModelName,
+                                PhysicalCores = physCores,
+                                LogicalCores = logCores,
                             };
 
             if (processor.ProcessorModelId == 0)
@@ -256,8 +272,8 @@ internal static class Program
                 await uow.SaveChangesAsync();
             }
 
-            var env = (await uow.SystemEnvironments.FindAsync(e => e.EnvironmentName == _osName))
-                      .FirstOrDefault() ?? new SystemEnvironment { EnvironmentName = _osName };
+            var env = (await uow.SystemEnvironments.FindAsync(e => e.EnvironmentName == osName))
+                      .FirstOrDefault() ?? new SystemEnvironment { EnvironmentName = osName };
 
             if (env.SystemEnvironmentId == 0)
             {
@@ -275,10 +291,10 @@ internal static class Program
                 {
                     BenchmarkTestId = benchmark.BenchmarkTestId,
                     ServerConfigurationId = 1,
-                    BuildExecutionId = 1,  
+                    BuildExecutionId = 1,
                     SingleThreadTimeMs = r.Microseconds / 1000,
                     MultiThreadTimeMs = r.Microseconds / 1000,
-                    MetricRecordTime = DateTime.UtcNow
+                    MetricRecordTime = DateTime.UtcNow,
                 };
                 await uow.PerformanceMetrics.AddAsync(metric);
             }
@@ -287,7 +303,7 @@ internal static class Program
             success = true;
             Console.WriteLine($"Saved {Results.Count} performance records to DB.");
         }
-        catch (Exception ex)
+        catch (ArgumentException ex)
         {
             Console.WriteLine($"DB save failed: {ex.Message}");
         }
@@ -296,24 +312,49 @@ internal static class Program
             if (success)
             {
                 File.Copy(tmpDb, dbPath, overwrite: true);
-                Console.WriteLine("Database updated successfully.");
             }
-            if (File.Exists(tmpDb)) File.Delete(tmpDb);
+
+            if (File.Exists(tmpDb))
+            {
+                File.Delete(tmpDb);
+            }
         }
     }
 
-    static (IMatrix<T> a, IMatrix<T> b) MakePair<T>(int size, Random rng, Func<int, int, IMatrix<T>> factory)
+    private static (IMatrix<T> a, IMatrix<T> b) MakePair<T>(int size, Random rng, Func<int, int, IMatrix<T>> factory)
         where T : INumber<T>
     {
         var a = factory(size, size);
         var b = factory(size, size);
-        a.Fill((_, _) => T.CreateChecked(rng.Next(1, 100)));
-        b.Fill((_, _) => T.CreateChecked(rng.Next(1, 100)));
+
+        FillMatrixWithSecureRandom(a);
+        FillMatrixWithSecureRandom(b);
+
         return (a, b);
+
+        static void FillMatrixWithSecureRandom(IMatrix<T> matrix)
+        {
+            var buffer = new byte[sizeof(int)];
+            for (int i = 0; i < matrix.Rows; i++)
+            {
+                for (int j = 0; j < matrix.Cols; j++)
+                {
+                    int value;
+                    do
+                    {
+                        RandomNumberGenerator.Fill(buffer);
+                        value = BitConverter.ToInt32(buffer, 0) & int.MaxValue;
+                        value = 1 + (value % 99);
+                    }
+                    while (value < 1 || value > 99);
+
+                    matrix.Fill((row, col) => row == i && col == j ? T.CreateChecked(value) : matrix[row, col]);
+                }
+            }
+        }
     }
 
-    static void PrintBanner()
+    private static void PrintBanner()
     {
-        Console.WriteLine("matrix performance test suite v3.0");
     }
 }
