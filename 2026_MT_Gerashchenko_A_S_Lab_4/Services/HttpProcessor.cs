@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
-using _2026_MT_Gerashchenko_A_S_Lab_4.Infrastructure;
-using _2026_MT_Gerashchenko_A_S_Lab_4.Models;
+using Infrastructure;
+using Models;
 
 namespace _2026_MT_Gerashchenko_A_S_Lab_4.Services;
 public sealed class HttpProcessor(IHttpClientFactory httpClientFactory) : IHttpProcessor

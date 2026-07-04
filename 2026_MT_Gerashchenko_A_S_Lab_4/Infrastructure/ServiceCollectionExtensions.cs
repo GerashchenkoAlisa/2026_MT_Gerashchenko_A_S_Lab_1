@@ -1,13 +1,13 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
-using _2026_MT_Gerashchenko_A_S_Lab_2.UnitsOfWork;
-using _2026_MT_Gerashchenko_A_S_Lab_4.Persistence;
-using _2026_MT_Gerashchenko_A_S_Lab_4.Services;
+﻿using Data;
+using UnitsOfWork;
+using Persistence;
+using Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Http;
 using Services;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_4.Infrastructure;
+namespace Infrastructure;
 
 public static class ServiceCollectionExtensions
 {

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
-using _2026_MT_Gerashchenko_A_S_Lab_4.Models;
-using _2026_MT_Gerashchenko_A_S_Lab_4.Services;
+using Models;
+using Services;
 
 namespace Services;
 public sealed class BenchmarkRunner(IHttpProcessor processor, IConsoleWriter console)

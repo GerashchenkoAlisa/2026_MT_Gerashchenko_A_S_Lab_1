@@ -1,12 +1,12 @@
-using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
-using _2026_MT_Gerashchenko_A_S_Lab_2.UnitsOfWork;
-using _2026_MT_Gerashchenko_A_S_Lab_4.Infrastructure;
-using _2026_MT_Gerashchenko_A_S_Lab_4.Models;
+using Data;
+using Entities;
+using UnitsOfWork;
+using Infrastructure;
+using Models;
 using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_4.Persistence;
+namespace Persistence;
 public sealed class MetricsPersistenceService(IBuildSystemUnitOfWork uow, BuildSystemDbContext dbContext)
 {
     internal class PipelineStepExecution

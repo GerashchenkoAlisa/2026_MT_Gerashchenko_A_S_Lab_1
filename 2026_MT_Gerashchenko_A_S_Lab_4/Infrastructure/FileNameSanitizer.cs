@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_4.Infrastructure;
+namespace Infrastructure;
 public static partial class FileNameSanitizer
 {
     private const int MaxFileNameLength = 200;

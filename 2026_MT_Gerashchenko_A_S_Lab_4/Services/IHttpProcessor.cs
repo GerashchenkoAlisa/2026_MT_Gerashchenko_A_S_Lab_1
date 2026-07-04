@@ -1,6 +1,6 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_4.Models;
+﻿using Models;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_4.Services;
+namespace Services;
 public interface IHttpProcessor
 {
     Task<IEnumerable<ScanResult>> AnalyzeAsync(

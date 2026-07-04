@@ -1,4 +1,4 @@
-﻿namespace _2026_MT_Gerashchenko_A_S_Lab_4.Models;
+﻿namespace Models;
 public record DownloadResult
 {
     public DownloadResult(Uri url, bool isSuccess, long bytesWritten, string? error = null)
