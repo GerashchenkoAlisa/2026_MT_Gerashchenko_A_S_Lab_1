@@ -1,8 +1,7 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_4.Infrastructure;
-using _2026_MT_Gerashchenko_A_S_Lab_4.Persistence;
-using _2026_MT_Gerashchenko_A_S_Lab_4.Services;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Infrastructure;
+using Persistence;
 using Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Lab4;
 
