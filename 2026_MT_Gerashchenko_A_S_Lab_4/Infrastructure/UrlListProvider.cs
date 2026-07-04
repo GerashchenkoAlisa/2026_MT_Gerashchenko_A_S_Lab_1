@@ -14,12 +14,12 @@ public static class UrlListProvider
 
         var lines = await File.ReadAllLinesAsync(filePath, ct).ConfigureAwait(false);
 
-        return lines
+        return
+            [.. lines
             .Select(l => l.Trim())
             .Where(l => l.StartsWith("http://", StringComparison.OrdinalIgnoreCase) ||
                         l.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
             .Distinct()
-            .Select(l => new Uri(l, UriKind.Absolute))
-            .ToList();
+            .Select(l => new Uri(l, UriKind.Absolute))];
     }
 }

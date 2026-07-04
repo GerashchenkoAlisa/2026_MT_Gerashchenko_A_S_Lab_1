@@ -23,7 +23,7 @@ public sealed class MetricsPersistenceService(IBuildSystemUnitOfWork uow, BuildS
         await dbContext.Database.MigrateAsync(ct).ConfigureAwait(false);
 
         var host = await GetOrCreateHostAsync(uow, env).ConfigureAwait(false);
-        var step = await GetOrCreateStepAsync(uow).ConfigureAwait(false);
+        _ = await GetOrCreateStepAsync(uow).ConfigureAwait(false);
 
         foreach (var run in runs)
         {
