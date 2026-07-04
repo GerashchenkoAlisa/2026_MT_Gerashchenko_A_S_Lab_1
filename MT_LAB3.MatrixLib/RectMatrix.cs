@@ -10,7 +10,8 @@ namespace MTLAB3.MatrixLib;
 public sealed class RectMatrix<T>(int rows, int cols) : MatrixBase<T>
     where T : INumber<T>
 {
-    private readonly T[,] data = new T[rows, cols];
+    private readonly T[,] data =
+        new T[rows, cols];
 
     public override int Rows { get; } = rows;
 

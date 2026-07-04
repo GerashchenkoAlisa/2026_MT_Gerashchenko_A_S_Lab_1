@@ -3,12 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
-namespace Migrations
+namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class AddMatrixAnalyticsLookups : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -254,59 +252,6 @@ namespace Migrations
                         principalTable: "ServerConfigurations",
                         principalColumn: "ServerConfigurationId",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.InsertData(
-                table: "ExecutionResults",
-                columns: new[] { "ExecutionResultId", "ResultDescription", "ResultName" },
-                values: new object[,]
-                {
-                    { 1, "Execution completed successfully", "Passed" },
-                    { 2, "Execution encountered errors", "Failed" },
-                    { 3, "Execution was aborted", "Aborted" },
-                    { 4, "Execution is currently running", "InProgress" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "MessageSeverities",
-                columns: new[] { "MessageSeverityId", "SeverityDescription", "SeverityName" },
-                values: new object[,]
-                {
-                    { 1, "Critical compilation error", "Error" },
-                    { 2, "Non-blocking issue", "Warning" },
-                    { 3, "Informational notification", "Info" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "ProcessStages",
-                columns: new[] { "ProcessStageId", "StageName" },
-                values: new object[,]
-                {
-                    { 1, "Compile" },
-                    { 2, "UnitTest" },
-                    { 3, "CodeAnalysis" },
-                    { 4, "Deploy" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "ProcessorModels",
-                columns: new[] { "ProcessorModelId", "LogicalCores", "PhysicalCores", "ProcessorName" },
-                values: new object[,]
-                {
-                    { 1, 32, 16, "AMD Ryzen 9 7950X" },
-                    { 2, 32, 24, "Intel Core i9-13900K" },
-                    { 3, 12, 6, "AMD Ryzen 5 5600X" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "SystemEnvironments",
-                columns: new[] { "SystemEnvironmentId", "EnvironmentDetails", "EnvironmentName" },
-                values: new object[,]
-                {
-                    { 1, null, "Windows 11 Pro (64-bit)" },
-                    { 2, null, "Windows 10 Pro (64-bit)" },
-                    { 3, null, "Ubuntu 24.04 LTS (64-bit)" },
-                    { 4, null, "macOS Sequoia 15" }
                 });
 
             migrationBuilder.CreateIndex(

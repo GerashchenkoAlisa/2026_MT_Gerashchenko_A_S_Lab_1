@@ -31,7 +31,7 @@ public sealed class FlatMatrix<T> : MatrixBase<T>
     protected override IMatrix<T> CreateSameType(int rows, int cols) =>
         new FlatMatrix<T>(rows, cols);
 
-    public static IMatrix<T> LoadFromBinaryFile(string path)
+    public IMatrix<T> LoadFromBinaryFile(string path)
     {
         return LoadFromBinaryFileCore(path, (r, c) => new FlatMatrix<T>(r, c));
     }

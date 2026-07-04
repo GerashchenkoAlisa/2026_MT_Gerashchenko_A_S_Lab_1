@@ -1,7 +1,3 @@
-// <copyright file="JaggedMatrix.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 using System.Numerics;
 using MTLAB3.MatrixLib;
 
