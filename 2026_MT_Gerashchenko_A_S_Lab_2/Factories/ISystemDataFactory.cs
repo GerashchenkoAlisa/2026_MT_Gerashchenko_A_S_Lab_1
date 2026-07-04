@@ -1,7 +1,7 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+﻿using Entities;
 using System.Collections.Generic;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Factories;
+namespace Factories;
 
 public interface ISystemDataFactory
 {

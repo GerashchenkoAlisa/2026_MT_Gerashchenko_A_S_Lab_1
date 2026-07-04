@@ -1,4 +1,4 @@
-﻿namespace _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+﻿namespace Entities;
 
 public abstract class BaseEntity<TKey> : IEntity<TKey>
     where TKey : struct

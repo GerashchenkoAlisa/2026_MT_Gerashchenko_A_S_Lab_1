@@ -3,17 +3,19 @@ using System;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
 
 #nullable disable
 
 namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
 {
     [DbContext(typeof(BuildSystemDbContext))]
-    partial class BuildSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260704221554_AddMatrixAnalyticsLookups")]
+    partial class AddMatrixAnalyticsLookups
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
