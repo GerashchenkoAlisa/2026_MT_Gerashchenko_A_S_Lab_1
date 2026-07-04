@@ -344,8 +344,9 @@ internal static class Program
                     {
                         RandomNumberGenerator.Fill(buffer);
                         value = BitConverter.ToInt32(buffer, 0) & int.MaxValue;
-                        value = 1 + (value % 99); 
-                    } while (value < 1 || value > 99);
+                        value = 1 + (value % 99);
+                    }
+                    while (value < 1 || value > 99);
 
                     matrix.Fill((row, col) => row == i && col == j ? T.CreateChecked(value) : matrix[row, col]);
                 }

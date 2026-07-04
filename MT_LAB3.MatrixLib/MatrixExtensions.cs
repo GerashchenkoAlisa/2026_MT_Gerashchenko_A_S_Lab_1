@@ -25,42 +25,6 @@ public static class MatrixExtensions
         }
     }
 
-    private static void WriteValue<T>(BinaryWriter writer, T value)
-        where T : INumber<T>
-    {
-        if (typeof(T) == typeof(int))
-        {
-            writer.Write(int.CreateChecked(value));
-            return;
-        }
-
-        if (typeof(T) == typeof(double))
-        {
-            writer.Write(double.CreateChecked(value));
-            return;
-        }
-
-        if (typeof(T) == typeof(float))
-        {
-            writer.Write(float.CreateChecked(value));
-            return;
-        }
-
-        if (typeof(T) == typeof(decimal))
-        {
-            writer.Write(decimal.CreateChecked(value));
-            return;
-        }
-
-        if (typeof(T) == typeof(long))
-        {
-            writer.Write(long.CreateChecked(value));
-            return;
-        }
-
-        throw new NotSupportedException($"Binary writing for type {typeof(T).Name} is not supported.");
-    }
-
     public static bool MatrixEquals<T>(this IMatrix<T> a, IMatrix<T> b, T tolerance)
         where T : INumber<T>
     {
@@ -107,5 +71,41 @@ public static class MatrixExtensions
                 matrix[i, j] = valueSelector(i, j);
             }
         }
+    }
+
+    private static void WriteValue<T>(BinaryWriter writer, T value)
+        where T : INumber<T>
+    {
+        if (typeof(T) == typeof(int))
+        {
+            writer.Write(int.CreateChecked(value));
+            return;
+        }
+
+        if (typeof(T) == typeof(double))
+        {
+            writer.Write(double.CreateChecked(value));
+            return;
+        }
+
+        if (typeof(T) == typeof(float))
+        {
+            writer.Write(float.CreateChecked(value));
+            return;
+        }
+
+        if (typeof(T) == typeof(decimal))
+        {
+            writer.Write(decimal.CreateChecked(value));
+            return;
+        }
+
+        if (typeof(T) == typeof(long))
+        {
+            writer.Write(long.CreateChecked(value));
+            return;
+        }
+
+        throw new NotSupportedException($"Binary writing for type {typeof(T).Name} is not supported.");
     }
 }

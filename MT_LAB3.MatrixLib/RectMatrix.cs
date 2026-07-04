@@ -7,7 +7,8 @@ using MTLAB3.MatrixLib;
 
 namespace MTLAB3.MatrixLib;
 
-public sealed class RectMatrix<T>(int rows, int cols) : MatrixBase<T>
+public sealed class RectMatrix<T>(int rows, int cols)
+    : MatrixBase<T>
     where T : INumber<T>
 {
     private readonly T[,] data =
@@ -23,11 +24,11 @@ public sealed class RectMatrix<T>(int rows, int cols) : MatrixBase<T>
         set => this.data[row, col] = value;
     }
 
-    protected override IMatrix<T> CreateSameType(int rows, int cols) =>
-        new RectMatrix<T>(rows, cols);
-
     public static IMatrix<T> LoadFromBinaryFile(string path)
     {
         return LoadFromBinaryFileCore(path, (r, c) => new RectMatrix<T>(r, c));
     }
+
+    protected override IMatrix<T> CreateSameType(int rows, int cols) =>
+        new RectMatrix<T>(rows, cols);
 }

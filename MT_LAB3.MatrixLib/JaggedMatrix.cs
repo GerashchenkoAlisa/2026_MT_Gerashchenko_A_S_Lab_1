@@ -7,16 +7,6 @@ public sealed class JaggedMatrix<T> : MatrixBase<T>
 {
     private readonly T[][] data;
 
-    public override int Rows { get; }
-
-    public override int Cols { get; }
-
-    public override T this[int row, int col]
-    {
-        get => this.data[row][col];
-        set => this.data[row][col] = value;
-    }
-
     public JaggedMatrix(int rows, int cols)
     {
         this.Rows = rows;
@@ -28,9 +18,19 @@ public sealed class JaggedMatrix<T> : MatrixBase<T>
         }
     }
 
-    protected override IMatrix<T> CreateSameType(int rows, int cols) =>
-        new JaggedMatrix<T>(rows, cols);
+    public override int Rows { get; }
+
+    public override int Cols { get; }
+
+    public override T this[int row, int col]
+    {
+        get => this.data[row][col];
+        set => this.data[row][col] = value;
+    }
 
     public static IMatrix<T> LoadFromBinaryFile(string path) =>
         LoadFromBinaryFileCore(path, (r, c) => new JaggedMatrix<T>(r, c));
+
+    protected override IMatrix<T> CreateSameType(int rows, int cols) =>
+        new JaggedMatrix<T>(rows, cols);
 }

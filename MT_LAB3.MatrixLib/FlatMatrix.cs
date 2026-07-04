@@ -11,6 +11,13 @@ public sealed class FlatMatrix<T> : MatrixBase<T>
 {
     private readonly T[] data;
 
+    public FlatMatrix(int rows, int cols)
+    {
+        this.Rows = rows;
+        this.Cols = cols;
+        this.data = new T[rows * cols];
+    }
+
     public override int Rows { get; }
 
     public override int Cols { get; }
@@ -21,18 +28,11 @@ public sealed class FlatMatrix<T> : MatrixBase<T>
         set => this.data[(row * this.Cols) + col] = value;
     }
 
-    public FlatMatrix(int rows, int cols)
-    {
-        this.Rows = rows;
-        this.Cols = cols;
-        this.data = new T[rows * cols];
-    }
-
-    protected override IMatrix<T> CreateSameType(int rows, int cols) =>
-        new FlatMatrix<T>(rows, cols);
-
     public IMatrix<T> LoadFromBinaryFile(string path)
     {
         return LoadFromBinaryFileCore(path, (r, c) => new FlatMatrix<T>(r, c));
     }
+
+    protected override IMatrix<T> CreateSameType(int rows, int cols) =>
+        new FlatMatrix<T>(rows, cols);
 }

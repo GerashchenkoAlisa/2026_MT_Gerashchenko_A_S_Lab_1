@@ -15,58 +15,6 @@ public abstract class MatrixBase<T> : IMatrix<T>
 
     public abstract T this[int row, int col] { get; set; }
 
-    protected static IMatrix<T> LoadFromBinaryFileCore(string path, Func<int, int, MatrixBase<T>> factory)
-    {
-        ArgumentNullException.ThrowIfNull(factory);
-        using var reader = new BinaryReader(File.OpenRead(path));
-        int rows = reader.ReadInt32();
-        int cols = reader.ReadInt32();
-        var matrix = factory(rows, cols);
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < cols; j++)
-            {
-                matrix[i, j] = ReadValue(reader);
-            }
-        }
-
-        return matrix;
-    }
-
-    private static T ReadValue(BinaryReader reader)
-    {
-        if (typeof(T) == typeof(int))
-        {
-            return T.CreateChecked(reader.ReadInt32());
-        }
-
-        if (typeof(T) == typeof(double))
-        {
-            return T.CreateChecked(reader.ReadDouble());
-        }
-
-        if (typeof(T) == typeof(float))
-        {
-            return T.CreateChecked(reader.ReadSingle());
-        }
-
-        if (typeof(T) == typeof(decimal))
-        {
-            return T.CreateChecked(reader.ReadDecimal());
-        }
-
-        if (typeof(T) == typeof(long))
-        {
-            return T.CreateChecked(reader.ReadInt64());
-        }
-
-        throw new NotSupportedException($"Binary reading for type {typeof(T).Name} is not supported.");
-    }
-
-    protected abstract IMatrix<T> CreateSameType(int rows, int cols);
-
-    protected IMatrix<T> CreateSameType() => this.CreateSameType(this.Rows, this.Cols);
-
     public IMatrix<T> AddByRowsSequential(IMatrix<T> other)
     {
         ArgumentNullException.ThrowIfNull(other);
@@ -274,6 +222,58 @@ public abstract class MatrixBase<T> : IMatrix<T>
         }
 
         return true;
+    }
+
+    protected static IMatrix<T> LoadFromBinaryFileCore(string path, Func<int, int, MatrixBase<T>> factory)
+    {
+        ArgumentNullException.ThrowIfNull(factory);
+        using var reader = new BinaryReader(File.OpenRead(path));
+        int rows = reader.ReadInt32();
+        int cols = reader.ReadInt32();
+        var matrix = factory(rows, cols);
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                matrix[i, j] = ReadValue(reader);
+            }
+        }
+
+        return matrix;
+    }
+
+    protected abstract IMatrix<T> CreateSameType(int rows, int cols);
+
+    protected IMatrix<T> CreateSameType() => this.CreateSameType(this.Rows, this.Cols);
+
+    private static T ReadValue(BinaryReader reader)
+    {
+        if (typeof(T) == typeof(int))
+        {
+            return T.CreateChecked(reader.ReadInt32());
+        }
+
+        if (typeof(T) == typeof(double))
+        {
+            return T.CreateChecked(reader.ReadDouble());
+        }
+
+        if (typeof(T) == typeof(float))
+        {
+            return T.CreateChecked(reader.ReadSingle());
+        }
+
+        if (typeof(T) == typeof(decimal))
+        {
+            return T.CreateChecked(reader.ReadDecimal());
+        }
+
+        if (typeof(T) == typeof(long))
+        {
+            return T.CreateChecked(reader.ReadInt64());
+        }
+
+        throw new NotSupportedException($"Binary reading for type {typeof(T).Name} is not supported.");
     }
 
     private void ValidateSameDimensions(IMatrix<T> other)

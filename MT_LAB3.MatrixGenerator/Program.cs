@@ -61,7 +61,7 @@ internal static class Program
             Span<byte> bytes = stackalloc byte[4];
             RandomNumberGenerator.Fill(bytes);
             int value = BitConverter.ToInt32(bytes);
-            value = Math.Abs(value % 99) + 1; 
+            value = Math.Abs(value % 99) + 1;
             return T.CreateChecked(value);
         }
 
@@ -88,7 +88,7 @@ internal static class Program
             Span<byte> bytes = stackalloc byte[8];
             RandomNumberGenerator.Fill(bytes);
             long value = BitConverter.ToInt64(bytes);
-            value = Math.Abs(value % 99) + 1; 
+            value = Math.Abs(value % 99) + 1;
             return T.CreateChecked(value);
         }
 
