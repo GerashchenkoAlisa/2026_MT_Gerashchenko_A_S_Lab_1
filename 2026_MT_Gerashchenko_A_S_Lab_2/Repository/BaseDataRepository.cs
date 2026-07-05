@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿// <copyright file="BaseDataRepository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using System.Linq.Expressions;
 using Data;
 using Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository;
 

@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// <copyright file="SystemEnvironment.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,7 +23,8 @@ public class SystemEnvironment : BaseEntity<int>
     [MaxLength(200)]
     public string? EnvironmentDetails { get; set; }
 
-    public virtual ICollection<ServerConfiguration> ServerConfigurations { get; } = [];
+    public virtual ICollection<ServerConfiguration> ServerConfigurations { get; } =
+        [];
 
     public override string ToLogString(string val = "")
         => base.ToLogString($"{this.EnvironmentName} {val}".TrimEnd());

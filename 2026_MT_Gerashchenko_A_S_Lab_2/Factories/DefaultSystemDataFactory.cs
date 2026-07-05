@@ -1,5 +1,8 @@
-﻿using Entities;
-using System.Collections.Generic;
+﻿// <copyright file="DefaultSystemDataFactory.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using Entities;
 
 namespace Factories;
 
@@ -53,7 +56,7 @@ public class DefaultSystemDataFactory : ISystemDataFactory
     ];
 
     public ServerConfiguration CreateServerConfiguration() =>
-        new()
+        new ()
         {
             ProcessorModelId = 1,
             MemoryCapacityGb = 32.00m,

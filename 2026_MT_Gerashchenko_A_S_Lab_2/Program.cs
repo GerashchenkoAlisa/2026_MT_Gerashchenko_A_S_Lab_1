@@ -1,13 +1,14 @@
-﻿using Data;
+﻿// <copyright file="Program.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using System.Globalization;
+using Data;
 using Entities;
 using Factories;
-using UnitsOfWork;
-using System;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using UnitsOfWork;
 
 namespace Program;
 
@@ -395,4 +396,3 @@ public static class Program
         Console.WriteLine(text);
     }
 }
-

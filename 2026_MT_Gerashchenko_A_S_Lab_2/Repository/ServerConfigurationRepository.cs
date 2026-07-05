@@ -1,7 +1,10 @@
-﻿using Data;
+﻿// <copyright file="ServerConfigurationRepository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using Data;
 using Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace Repository;
 

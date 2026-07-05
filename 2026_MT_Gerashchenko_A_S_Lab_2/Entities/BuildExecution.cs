@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// <copyright file="BuildExecution.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 
 namespace Entities;
 
@@ -48,7 +49,8 @@ public class BuildExecution : BaseEntity<int>
     [ForeignKey(nameof(ExecutionResultId))]
     public virtual ExecutionResult ExecutionResult { get; set; } = null!;
 
-    public virtual ICollection<BuildMessage> BuildMessages { get; } = [];
+    public virtual ICollection<BuildMessage> BuildMessages { get; } =
+        [];
 
     public override string ToLogString(string val = "")
         => base.ToLogString($"[{this.ExecutionResult?.ResultName}] App={this.ApplicationId} Stage={this.ProcessStageId} {val}".TrimEnd());

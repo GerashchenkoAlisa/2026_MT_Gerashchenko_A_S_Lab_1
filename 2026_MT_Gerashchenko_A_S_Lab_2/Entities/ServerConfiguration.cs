@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// <copyright file="ServerConfiguration.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -28,7 +31,8 @@ public class ServerConfiguration : BaseEntity<int>
     [ForeignKey(nameof(SystemEnvironmentId))]
     public virtual SystemEnvironment SystemEnvironment { get; set; } = null!;
 
-    public virtual ICollection<PerformanceMetric> PerformanceMetrics { get; } = [];
+    public virtual ICollection<PerformanceMetric> PerformanceMetrics { get; } =
+        [];
 
     public override string ToLogString(string val = "")
         => base.ToLogString(
