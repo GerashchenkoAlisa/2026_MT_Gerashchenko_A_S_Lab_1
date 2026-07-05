@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console;
 using UnitsOfWork;
 
-namespace Lab5;
+namespace Program;
 
 internal class Program
 {

@@ -1,10 +1,10 @@
-﻿using Data;
+﻿// <copyright file="BuildExecutionRepository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using Data;
 using Entities;
-using Repository;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Repository;
 

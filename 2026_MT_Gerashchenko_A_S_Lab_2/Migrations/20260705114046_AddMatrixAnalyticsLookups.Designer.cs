@@ -8,14 +8,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
+namespace _2026MTGerashchenkoASLab_2.Migrations
 {
     [DbContext(typeof(BuildSystemDbContext))]
-    [Migration("20260704221554_AddMatrixAnalyticsLookups")]
+    [Migration("20260705114046_AddMatrixAnalyticsLookups")]
     partial class AddMatrixAnalyticsLookups
     {
         /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        private void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");

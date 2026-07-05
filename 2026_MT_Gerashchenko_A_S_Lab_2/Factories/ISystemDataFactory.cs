@@ -1,5 +1,8 @@
-﻿using Entities;
-using System.Collections.Generic;
+﻿// <copyright file="ISystemDataFactory.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using Entities;
 
 namespace Factories;
 

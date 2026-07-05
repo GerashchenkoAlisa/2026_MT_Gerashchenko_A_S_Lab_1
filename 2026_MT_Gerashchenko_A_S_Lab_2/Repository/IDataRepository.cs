@@ -1,9 +1,9 @@
-﻿using Data;
-using Entities;
-using System;
-using System.Collections.Generic;
+﻿// <copyright file="IDataRepository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.Linq.Expressions;
-using System.Threading.Tasks;
+using Entities;
 
 namespace Repository;
 

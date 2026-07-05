@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// <copyright file="MessageSeverity.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,7 +23,8 @@ public class MessageSeverity : BaseEntity<int>
     [MaxLength(200)]
     public string? SeverityDescription { get; set; }
 
-    public virtual ICollection<BuildMessage> BuildMessages { get; } = [];
+    public virtual ICollection<BuildMessage> BuildMessages { get; } =
+        [];
 
     public override string ToLogString(string val = "")
         => base.ToLogString($"{this.SeverityName} {val}".TrimEnd());

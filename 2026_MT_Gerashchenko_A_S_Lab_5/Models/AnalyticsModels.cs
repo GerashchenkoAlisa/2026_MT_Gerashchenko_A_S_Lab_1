@@ -1,34 +1,34 @@
 ﻿namespace Models;
 
 public record TopMethodEntry(
-    string test,
-    long timeMs,
-    decimal gain,
-    string processor,
-    string algorithm,
-    bool isParallel);
+    string Test,
+    long TimeMs,
+    decimal Gain,
+    string Processor,
+    string Algorithm,
+    bool IsParallel);
 
 public record SpeedupEntry(
-    string testType,
-    double avgSpeedup,
-    int count);
+    string TestType,
+    double AvgSpeedup,
+    int Count);
 
 public record AnomalyEntry(
-    string test,
-    long singleMs,
-    long multiMs,
-    long overhead);
+    string Test,
+    long SingleMs,
+    long MultiMs,
+    long Overhead);
 
 public record EnvironmentEntry(
-    string processor,
-    double avgSingle,
-    double avgMulti,
-    int count);
+    string Processor,
+    double AvgSingle,
+    double AvgMulti,
+    int Count);
 
 public record BestStructureEntry(
-    string sizeGroup,
-    decimal bestGain);
+    string SizeGroup,
+    decimal BestGain);
 
 public record OrderComparisonEntry(
-    string test,
-    double avgTime);
+    string Test,
+    double AvgTime);

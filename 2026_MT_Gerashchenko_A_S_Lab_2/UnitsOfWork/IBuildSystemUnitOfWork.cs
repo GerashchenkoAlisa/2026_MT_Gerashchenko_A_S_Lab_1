@@ -1,7 +1,11 @@
-﻿using Entities;
-using Repository;
+﻿// <copyright file="IBuildSystemUnitOfWork.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Threading.Tasks;
+using Entities;
+using Repository;
 
 namespace UnitsOfWork;
 

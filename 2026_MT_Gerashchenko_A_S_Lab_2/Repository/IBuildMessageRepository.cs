@@ -1,7 +1,8 @@
-﻿using Data;
+﻿// <copyright file="IBuildMessageRepository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Repository;
 

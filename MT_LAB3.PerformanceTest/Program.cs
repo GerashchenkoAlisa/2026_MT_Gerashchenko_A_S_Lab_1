@@ -95,9 +95,9 @@ internal static class Program
     private static void RunBenchmarkForSize(int size)
     {
         var rng = new Random(1);
-        var (rA, rB) = MakePair<int>(size, rng, (r, c) => new RectMatrix<int>(r, c));
-        var (jA, jB) = MakePair<int>(size, rng, (r, c) => new JaggedMatrix<int>(r, c));
-        var (fA, fB) = MakePair<int>(size, rng, (r, c) => new FlatMatrix<int>(r, c));
+        var (rA, rB) = MakePair<int>(size, (r, c) => new RectMatrix<int>(r, c));
+        var (jA, jB) = MakePair<int>(size, (r, c) => new JaggedMatrix<int>(r, c));
+        var (fA, fB) = MakePair<int>(size, (r, c) => new FlatMatrix<int>(r, c));
 
         var triples = new (string name, IMatrix<int> a, IMatrix<int> b)[]
         {
@@ -180,7 +180,7 @@ internal static class Program
 
         foreach (int size in sizes)
         {
-            var (a, b) = MakePair<int>(size, rng, (r, c) => new RectMatrix<int>(r, c));
+            var (a, b) = MakePair<int>(size, (r, c) => new RectMatrix<int>(r, c));
 
             long seqUs = MedianMicros(Runs, () => a.AddByRowsSequential(b));
             long parUs = MedianMicros(Runs, () => a.AddByRowsParallel(b));
@@ -321,7 +321,7 @@ internal static class Program
         }
     }
 
-    private static (IMatrix<T> a, IMatrix<T> b) MakePair<T>(int size, Random rng, Func<int, int, IMatrix<T>> factory)
+    private static (IMatrix<T> a, IMatrix<T> b) MakePair<T>(int size, Func<int, int, IMatrix<T>> factory)
         where T : INumber<T>
     {
         var a = factory(size, size);

@@ -1,6 +1,8 @@
-﻿using Data;
+﻿// <copyright file="IErrorCodeRepository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using Entities;
-using System.Threading.Tasks;
 
 namespace Repository;
 

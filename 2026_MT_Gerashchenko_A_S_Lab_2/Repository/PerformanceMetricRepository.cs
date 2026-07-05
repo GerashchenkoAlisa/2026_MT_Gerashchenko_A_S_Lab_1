@@ -1,9 +1,10 @@
-﻿using Data;
+﻿// <copyright file="PerformanceMetricRepository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using Data;
 using Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Repository;
 
@@ -29,15 +30,6 @@ public class PerformanceMetricRepository(BuildSystemDbContext context)
             .ThenInclude(sc => sc!.ProcessorModel)
             .Where(pm => pm.ServerConfigurationId == serverConfigurationId)
             .OrderByDescending(pm => pm.MetricRecordTime)
-            .ToListAsync().ConfigureAwait(false);
-    }
-
-    public async Task<IEnumerable<PerformanceMetric>> GetAllWithRelationsAsync()
-    {
-        return await this.DbSet
-            .Include(pm => pm.BenchmarkTest)
-            .Include(pm => pm.ServerConfiguration)
-                .ThenInclude(sc => sc!.ProcessorModel)
             .ToListAsync().ConfigureAwait(false);
     }
 }

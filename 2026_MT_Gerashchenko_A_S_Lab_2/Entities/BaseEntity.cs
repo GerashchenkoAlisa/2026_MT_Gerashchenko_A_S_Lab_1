@@ -1,4 +1,8 @@
-﻿namespace Entities;
+﻿// <copyright file="BaseEntity.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Entities;
 
 public abstract class BaseEntity<TKey> : IEntity<TKey>
     where TKey : struct

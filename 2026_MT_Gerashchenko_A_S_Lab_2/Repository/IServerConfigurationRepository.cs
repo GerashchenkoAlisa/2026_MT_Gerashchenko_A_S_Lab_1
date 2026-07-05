@@ -1,5 +1,8 @@
-﻿using Entities;
-using System.Threading.Tasks;
+﻿// <copyright file="IServerConfigurationRepository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using Entities;
 
 namespace Repository;
 
