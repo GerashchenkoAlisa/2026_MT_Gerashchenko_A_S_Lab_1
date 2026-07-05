@@ -1,13 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
-using _2026_MT_Gerashchenko_A_S_Lab_2.UnitsOfWork;
+using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console;
+using UnitsOfWork;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_5;
+namespace Lab5;
 
 internal class Program
 {
@@ -29,8 +29,8 @@ internal class Program
             .Spinner(Spinner.Known.Dots3)
             .StartAsync("Загрузка данных из базы...", async ctx =>
             {
-                await analytics.LoadDataAsync();
-            });
+                await analytics.LoadDataAsync().ConfigureAwait(false);
+            }).ConfigureAwait(false);
 
         RunInteractiveMenu(analytics);
     }
@@ -72,7 +72,7 @@ internal class Program
                     case '7': ReportRenderer.RenderDashboard(); break;
                 }
             }
-            catch (Exception ex)
+            catch (AggregateException ex)
             {
                 AnsiConsole.MarkupLine($"[red]Ошибка: {ex.Message}[/]");
             }

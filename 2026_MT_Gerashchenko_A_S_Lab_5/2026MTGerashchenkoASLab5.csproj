@@ -3,13 +3,14 @@
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net8.0</TargetFramework>
-		<RootNamespace>_2026_MT_Gerashchenko_A_S_Lab_5</RootNamespace>
+		<RootNamespace>_2026MTGerashchenkoASLab5</RootNamespace>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
 		<CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
+		<NoWarn>SA0001,SA1600,SA1633</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -22,12 +23,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\2026_MT_Gerashchenko_A_S_Lab_2\2026_MT_Gerashchenko_A_S_Lab_2.csproj" />
+		<AdditionalFiles Include="..\code-analysis.ruleset" Link="Properties\code-analysis.ruleset" />
+		<AdditionalFiles Include="..\stylecop.json" Link="Properties\stylecop.json" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<AdditionalFiles Include="..\code-analysis.ruleset" Link="Properties\code-analysis.ruleset" />
-		<AdditionalFiles Include="..\stylecop.json" Link="Properties\stylecop.json" />
+	  <ProjectReference Include="..\2026_MT_Gerashchenko_A_S_Lab_2\2026MTGerashchenkoASLab2.csproj" />
+	  <ProjectReference Include="..\MT_LAB3.MatrixGenerator\MTLAB3.MatrixGenerator.csproj" />
+	  <ProjectReference Include="..\MT_LAB3.MatrixLib\MTLAB3.MatrixLib.csproj" />
+	  <ProjectReference Include="..\MT_LAB3.PerformanceTest\MTLAB3.PerformanceTest.csproj" />
 	</ItemGroup>
 
 </Project>

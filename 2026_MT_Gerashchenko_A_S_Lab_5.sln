@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2026MTGerashchenkoASLab2", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2026_MT_Gerashchenko_A_S_Lab_1", "2026_MT_Gerashchenko_A_S_Lab_1\2026_MT_Gerashchenko_A_S_Lab_1.csproj", "{15D6E96C-0EF6-4A2E-B473-88A3F670B992}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2026_MT_Gerashchenko_A_S_Lab_5", "2026_MT_Gerashchenko_A_S_Lab_5\2026_MT_Gerashchenko_A_S_Lab_5.csproj", "{DBB03464-FADA-48D0-8B9D-8D8F61297185}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2026MTGerashchenkoASLab5", "2026_MT_Gerashchenko_A_S_Lab_5\2026MTGerashchenkoASLab5.csproj", "{DBB03464-FADA-48D0-8B9D-8D8F61297185}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,5 +100,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A2687F7C-1708-4CF7-9381-78D1C43168B8}
 	EndGlobalSection
 EndGlobal

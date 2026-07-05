@@ -1,12 +1,15 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_5.Models;
+﻿using Models;
 using Spectre.Console;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_5;
+namespace Lab5;
 
 public static class ReportRenderer
 {
-    public static void RenderTopMethods(List<TopMethodEntry> data)
+    public static void RenderTopMethods(ICollection<TopMethodEntry> data)
     {
+        ArgumentNullException.ThrowIfNull(data);
+
         var table = new Table()
             .Border(TableBorder.Rounded)
             .Title("[bold yellow]Топ-3 самых быстрых методов (2000×2000)[/]");
@@ -55,8 +58,9 @@ public static class ReportRenderer
         AnsiConsole.Write(chart);
     }
 
-    public static void RenderAnomalies(List<AnomalyEntry> anomalies)
+    public static void RenderAnomalies(ICollection<AnomalyEntry> anomalies)
     {
+        ArgumentNullException.ThrowIfNull(anomalies);
         if (anomalies.Count == 0)
         {
             AnsiConsole.MarkupLine("[green]Аномалий не найдено.[/]");
@@ -76,16 +80,17 @@ public static class ReportRenderer
         {
             table.AddRow(
                 item.test,
-                item.singleMs.ToString(),
-                item.multiMs.ToString(),
+                item.singleMs.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                item.multiMs.ToString(System.Globalization.CultureInfo.InvariantCulture),
                 $"[red]{item.overhead}[/]");
         }
 
         AnsiConsole.Write(table);
     }
 
-    public static void RenderEnvironmentComparison(List<EnvironmentEntry> data)
+    public static void RenderEnvironmentComparison(ICollection<EnvironmentEntry> data)
     {
+        ArgumentNullException.ThrowIfNull(data);
         var table = new Table()
             .Border(TableBorder.Rounded)
             .Title("[bold]Сравнение процессоров[/]");
@@ -97,17 +102,19 @@ public static class ReportRenderer
 
         foreach (var item in data)
         {
-            table.AddRow(item.processor,
-                         item.avgSingle.ToString("F0"),
-                         item.avgMulti.ToString("F0"),
-                         item.count.ToString());
+            table.AddRow(
+                item.processor,
+                item.avgSingle.ToString("F0", System.Globalization.CultureInfo.InvariantCulture),
+                item.avgMulti.ToString("F0", System.Globalization.CultureInfo.InvariantCulture),
+                item.count.ToString(System.Globalization.CultureInfo.InvariantCulture));
         }
 
         AnsiConsole.Write(table);
     }
 
-    public static void RenderBestStructure(List<BestStructureEntry> data)
+    public static void RenderBestStructure(ICollection<BestStructureEntry> data)
     {
+        ArgumentNullException.ThrowIfNull(data);
         var chart = new BarChart()
             .Width(60)
             .Label("[bold]Лучшие результаты[/]");
@@ -123,8 +130,9 @@ public static class ReportRenderer
         AnsiConsole.Write(chart);
     }
 
-    public static void RenderOrderComparison(List<OrderComparisonEntry> data)
+    public static void RenderOrderComparison(ICollection<OrderComparisonEntry> data)
     {
+        ArgumentNullException.ThrowIfNull(data);
         var table = new Table()
             .Border(TableBorder.Rounded)
             .Title("[bold]Среднее время выполнения[/]");
@@ -134,8 +142,9 @@ public static class ReportRenderer
 
         foreach (var item in data)
         {
-            table.AddRow(item.test,
-                         item.avgTime.ToString("F0"));
+            table.AddRow(
+                item.test,
+                item.avgTime.ToString("F0", System.Globalization.CultureInfo.InvariantCulture));
         }
 
         AnsiConsole.Write(table);

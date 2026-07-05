@@ -1,29 +1,34 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
-using _2026_MT_Gerashchenko_A_S_Lab_2.UnitsOfWork;
-using _2026_MT_Gerashchenko_A_S_Lab_5.Models;
+﻿using Entities;
+using Models;
 using Spectre.Console;
+using UnitsOfWork;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_5;
+namespace Lab5;
 
 public class AnalyticsService(IBuildSystemUnitOfWork uow)
 {
-    private readonly IBuildSystemUnitOfWork _uow = uow;
-    private List<PerformanceMetric> _metrics = [];
+    private readonly IBuildSystemUnitOfWork uow = uow;
+    private List<PerformanceMetric> metrics =
+        [];
 
     public async Task LoadDataAsync()
     {
-        var all = await this._uow.PerformanceMetrics.GetAllWithRelationsAsync();
-this._metrics = [.. all];
+        var all = await this.uow.PerformanceMetrics.GetAllWithRelationsAsync().ConfigureAwait(false);
+        this.metrics =
+            [.. all];
 
         AnsiConsole.MarkupLine(
-            $"[green]Загружено {this._metrics.Count} записей производительности.[/]");
+            $"[green]Загружено {this.metrics.Count} записей производительности.[/]");
     }
 
     // 1. Топ-3 самых быстрых методов
-    public List<TopMethodEntry> GetTopEfficientMethods(int size = 2000)
+    public ICollection<TopMethodEntry> GetTopEfficientMethods(int size = 2000)
     {
-        return [.. this._metrics
-            .Where(m => m.BenchmarkTest.TestDescription.Contains(size.ToString()))
+        return
+            [.. this.metrics
+            .Where(m => m.BenchmarkTest.TestDescription.Contains(
+                size.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                StringComparison.InvariantCulture))
             .OrderBy(m => m.SingleThreadTimeMs)
             .Take(3)
             .Select(m => new TopMethodEntry(
@@ -38,18 +43,19 @@ this._metrics = [.. all];
     // 2. Среднее ускорение
     public double CalculateParallelismEffect()
     {
-        var valid = this._metrics.Where(m => m.MultiThreadTimeMs > 0);
+        var valid = this.metrics.Where(m => m.MultiThreadTimeMs > 0).ToList();
 
-        return !valid.Any()
+        return valid.Count == 0
             ? 0
             : valid.Average(m =>
-            (double)m.SingleThreadTimeMs / m.MultiThreadTimeMs);
+                (double)m.SingleThreadTimeMs / m.MultiThreadTimeMs);
     }
 
     // 3. Аномалии
-    public List<AnomalyEntry> FindAnomalies()
+    public ICollection<AnomalyEntry> FindAnomalies()
     {
-        return [.. this._metrics
+        return
+            [.. this.metrics
             .Where(m => m.MultiThreadTimeMs > m.SingleThreadTimeMs)
             .OrderByDescending(m => m.MultiThreadTimeMs - m.SingleThreadTimeMs)
             .Select(m => new AnomalyEntry(
@@ -60,9 +66,10 @@ this._metrics = [.. all];
     }
 
     // 4. Сравнение процессоров
-    public List<EnvironmentEntry> CompareEnvironments()
+    public ICollection<EnvironmentEntry> CompareEnvironments()
     {
-        return [.. this._metrics
+        return
+            [.. this.metrics
             .GroupBy(m =>
                 m.ServerConfiguration?.ProcessorModel?.ProcessorName ?? "Unknown")
             .Select(g => new EnvironmentEntry(
@@ -74,9 +81,10 @@ this._metrics = [.. all];
     }
 
     // 5. Лучшая структура
-    public List<BestStructureEntry> GetBestStructureBySize()
+    public ICollection<BestStructureEntry> GetBestStructureBySize()
     {
-        return [.. this._metrics
+        return
+            [.. this.metrics
             .GroupBy(m => m.BenchmarkTest.TestDescription)
             .Select(g => new BestStructureEntry(
                 sizeGroup: g.Key,
@@ -84,9 +92,10 @@ this._metrics = [.. all];
     }
 
     // 6. Сравнение порядков
-    public List<OrderComparisonEntry> CompareMultiplicationOrders()
+    public ICollection<OrderComparisonEntry> CompareMultiplicationOrders()
     {
-        return [.. this._metrics
+        return
+            [.. this.metrics
             .GroupBy(m => m.BenchmarkTest?.TestDescription ?? "Unknown")
             .Select(g => new OrderComparisonEntry(
                 test: g.Key,
