@@ -1,8 +1,12 @@
-using System.Collections.Generic;
+﻿// <copyright file="ExecutionResult.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+namespace Entities;
+
 [Table("ExecutionResults")]
 public class ExecutionResult : BaseEntity<int>
 {
@@ -19,7 +23,8 @@ public class ExecutionResult : BaseEntity<int>
     [MaxLength(200)]
     public string? ResultDescription { get; set; }
 
-    public virtual ICollection<BuildExecution> BuildExecutions { get; } =[];
+    public virtual ICollection<BuildExecution> BuildExecutions { get; } =
+        [];
 
     public override string ToLogString(string val = "")
         => base.ToLogString($"{this.ResultName} {val}".TrimEnd());

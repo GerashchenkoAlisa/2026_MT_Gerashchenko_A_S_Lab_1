@@ -1,9 +1,13 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Repository;
-using Microsoft.EntityFrameworkCore.Storage;
+﻿// <copyright file="BuildSystemUnitOfWork.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.UnitsOfWork;
+using Data;
+using Entities;
+using Microsoft.EntityFrameworkCore.Storage;
+using Repository;
+
+namespace UnitsOfWork;
 
 public class BuildSystemUnitOfWork(BuildSystemDbContext context)
     : IBuildSystemUnitOfWork

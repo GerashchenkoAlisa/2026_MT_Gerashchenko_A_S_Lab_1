@@ -1,6 +1,10 @@
-using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+﻿// <copyright file="ISystemDataFactory.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Factories;
+using Entities;
+
+namespace Factories;
 
 public interface ISystemDataFactory
 {

@@ -1,12 +1,16 @@
+﻿// <copyright file="Program.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.Globalization;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Factories;
-using _2026_MT_Gerashchenko_A_S_Lab_2.UnitsOfWork;
+using Data;
+using Entities;
+using Factories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using UnitsOfWork;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2;
+namespace Program;
 
 public static class Program
 {

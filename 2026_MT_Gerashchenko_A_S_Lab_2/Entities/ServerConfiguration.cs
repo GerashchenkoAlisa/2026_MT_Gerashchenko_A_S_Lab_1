@@ -1,7 +1,11 @@
+﻿// <copyright file="ServerConfiguration.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+namespace Entities;
 
 [Table("ServerConfigurations")]
 public class ServerConfiguration : BaseEntity<int>
@@ -27,9 +31,10 @@ public class ServerConfiguration : BaseEntity<int>
     [ForeignKey(nameof(SystemEnvironmentId))]
     public virtual SystemEnvironment SystemEnvironment { get; set; } = null!;
 
-    public virtual ICollection<PerformanceMetric> PerformanceMetrics { get; } =[];
+    public virtual ICollection<PerformanceMetric> PerformanceMetrics { get; } =
+        [];
 
     public override string ToLogString(string val = "")
-    => base.ToLogString(
-        $"{this.SystemEnvironment?.EnvironmentName ?? "Unknown"} RAM={this.MemoryCapacityGb}GB {val}".TrimEnd());
+        => base.ToLogString(
+            $"{this.SystemEnvironment?.EnvironmentName} RAM={this.MemoryCapacityGb}GB {val}".TrimEnd());
 }

@@ -1,9 +1,13 @@
-﻿using System.Linq.Expressions;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+﻿// <copyright file="BaseDataRepository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using System.Linq.Expressions;
+using Data;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Repository;
+namespace Repository;
 
 public class BaseDataRepository<T> : IDataRepository<T>
     where T : BaseEntity<int>

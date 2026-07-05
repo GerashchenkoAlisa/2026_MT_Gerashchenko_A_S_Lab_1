@@ -1,8 +1,12 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+﻿// <copyright file="ServerConfigurationRepository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using Data;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Repository;
+namespace Repository;
 
 public class ServerConfigurationRepository(BuildSystemDbContext context)
     : BaseDataRepository<ServerConfiguration>(context), IServerConfigurationRepository

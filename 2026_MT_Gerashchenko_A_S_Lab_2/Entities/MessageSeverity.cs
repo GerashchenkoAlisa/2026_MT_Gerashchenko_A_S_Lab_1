@@ -1,7 +1,11 @@
+﻿// <copyright file="MessageSeverity.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+namespace Entities;
 
 [Table("MessageSeverities")]
 public class MessageSeverity : BaseEntity<int>
@@ -19,7 +23,8 @@ public class MessageSeverity : BaseEntity<int>
     [MaxLength(200)]
     public string? SeverityDescription { get; set; }
 
-    public virtual ICollection<BuildMessage> BuildMessages { get; } =[];
+    public virtual ICollection<BuildMessage> BuildMessages { get; } =
+        [];
 
     public override string ToLogString(string val = "")
         => base.ToLogString($"{this.SeverityName} {val}".TrimEnd());

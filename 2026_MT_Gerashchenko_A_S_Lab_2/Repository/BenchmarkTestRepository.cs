@@ -1,8 +1,12 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+﻿// <copyright file="BenchmarkTestRepository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using Data;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Repository;
+namespace Repository;
 
 public class BenchmarkTestRepository(BuildSystemDbContext context)
     : BaseDataRepository<BenchmarkTest>(context), IBenchmarkTestRepository

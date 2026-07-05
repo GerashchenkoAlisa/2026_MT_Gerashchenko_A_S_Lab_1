@@ -1,7 +1,13 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Repository;
+﻿// <copyright file="IBuildSystemUnitOfWork.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.UnitsOfWork;
+using System;
+using System.Threading.Tasks;
+using Entities;
+using Repository;
+
+namespace UnitsOfWork;
 
 public interface IBuildSystemUnitOfWork : IDisposable
 {

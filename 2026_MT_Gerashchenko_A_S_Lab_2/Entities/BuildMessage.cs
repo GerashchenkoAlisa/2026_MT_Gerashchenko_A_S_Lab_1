@@ -1,7 +1,11 @@
+﻿// <copyright file="BuildMessage.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+namespace Entities;
 
 [Table("BuildMessages")]
 public class BuildMessage : BaseEntity<int>
@@ -36,5 +40,5 @@ public class BuildMessage : BaseEntity<int>
     public virtual BuildExecution BuildExecution { get; set; } = null!;
 
     public override string ToLogString(string val = "")
-    => base.ToLogString($"[{this.MessageSeverity?.SeverityName ?? "Unknown"}] {this.ErrorCode?.CodeValue ?? "N/A"}: {this.MessageText} {val}".TrimEnd());
+        => base.ToLogString($"[{this.MessageSeverity?.SeverityName}] {this.ErrorCode?.CodeValue}: {this.MessageText} {val}".TrimEnd());
 }

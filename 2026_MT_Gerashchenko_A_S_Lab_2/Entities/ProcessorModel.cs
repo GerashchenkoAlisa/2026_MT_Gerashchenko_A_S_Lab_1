@@ -1,7 +1,11 @@
+﻿// <copyright file="ProcessorModel.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+namespace Entities;
 
 [Table("ProcessorModels")]
 public class ProcessorModel : BaseEntity<int>
@@ -22,7 +26,8 @@ public class ProcessorModel : BaseEntity<int>
     [Required]
     public int LogicalCores { get; set; }
 
-    public virtual ICollection<ServerConfiguration> ServerConfigurations { get; } =[];
+    public virtual ICollection<ServerConfiguration> ServerConfigurations { get; } =
+        [];
 
     public override string ToLogString(string val = "")
         => base.ToLogString($"{this.ProcessorName} Cores={this.PhysicalCores} Threads={this.LogicalCores} {val}".TrimEnd());

@@ -1,8 +1,12 @@
-﻿using _2026_MT_Gerashchenko_A_S_Lab_2.Data;
-using _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+﻿// <copyright file="BuildExecutionRepository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using Data;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Repository;
+namespace Repository;
 
 public class BuildExecutionRepository(BuildSystemDbContext context)
     : BaseDataRepository<BuildExecution>(context), IBuildExecutionRepository

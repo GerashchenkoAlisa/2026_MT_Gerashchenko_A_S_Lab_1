@@ -1,8 +1,11 @@
-using System.Collections.Generic;
+﻿// <copyright file="ErrorCode.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+namespace Entities;
 
 [Table("ErrorCodes")]
 public class ErrorCode : BaseEntity<int>
@@ -20,7 +23,8 @@ public class ErrorCode : BaseEntity<int>
     [MaxLength(500)]
     public string? CodeDescription { get; set; }
 
-    public virtual ICollection<BuildMessage> BuildMessages { get; } =[];
+    public virtual ICollection<BuildMessage> BuildMessages { get; } =
+        [];
 
     public override string ToLogString(string val = "")
         => base.ToLogString($"{this.CodeValue} {val}".TrimEnd());

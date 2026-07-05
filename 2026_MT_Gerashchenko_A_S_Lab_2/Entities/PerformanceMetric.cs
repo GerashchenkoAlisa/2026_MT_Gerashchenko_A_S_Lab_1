@@ -1,7 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// <copyright file="PerformanceMetric.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Entities;
+namespace Entities;
 
 [Table("PerformanceMetrics")]
 public class PerformanceMetric : BaseEntity<int>
