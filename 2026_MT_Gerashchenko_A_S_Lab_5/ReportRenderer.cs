@@ -2,7 +2,7 @@
 using Spectre.Console;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Program;
+namespace Programm;
 
 public static class ReportRenderer
 {
@@ -115,16 +115,19 @@ public static class ReportRenderer
     public static void RenderBestStructure(ICollection<BestStructureEntry> data)
     {
         ArgumentNullException.ThrowIfNull(data);
+        if (data.Count == 0)
+        {
+            AnsiConsole.MarkupLine("[green]Нет данных для отображения.[/]");
+            return;
+        }
+
         var chart = new BarChart()
             .Width(60)
             .Label("[bold]Лучшие результаты[/]");
 
         foreach (var item in data)
         {
-            chart.AddItem(
-                item.SizeGroup,
-                (double)item.BestGain,
-                Color.Cyan1);
+            chart.AddItem(item.SizeGroup, (double)item.BestGain, Color.Cyan1);
         }
 
         AnsiConsole.Write(chart);

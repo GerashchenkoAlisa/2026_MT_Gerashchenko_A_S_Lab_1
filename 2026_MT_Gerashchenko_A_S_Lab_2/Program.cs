@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using UnitsOfWork;
 
-namespace Program;
+namespace Programm;
 
 public static class Program
 {

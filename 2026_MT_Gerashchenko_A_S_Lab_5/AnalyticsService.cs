@@ -3,7 +3,7 @@ using Models;
 using Spectre.Console;
 using UnitsOfWork;
 
-namespace Program;
+namespace Programm;
 
 public class AnalyticsService(IBuildSystemUnitOfWork uow)
 {
