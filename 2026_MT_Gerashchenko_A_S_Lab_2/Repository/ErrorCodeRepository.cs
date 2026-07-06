@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Data;
+﻿using Data;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 using Repository;

@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Options;
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace Migrations
 {
     /// <inheritdoc />
