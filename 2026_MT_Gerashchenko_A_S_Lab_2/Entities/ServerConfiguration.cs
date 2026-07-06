@@ -28,7 +28,8 @@ public class ServerConfiguration : BaseEntity<int>
     [ForeignKey(nameof(SystemEnvironmentId))]
     public virtual SystemEnvironment SystemEnvironment { get; set; } = null!;
 
-    public virtual ICollection<PerformanceMetric> PerformanceMetrics { get; } = [];
+    public virtual ICollection<PerformanceMetric> PerformanceMetrics { get; } =
+        [];
 
     public override string ToLogString(string val = "")
         => base.ToLogString(

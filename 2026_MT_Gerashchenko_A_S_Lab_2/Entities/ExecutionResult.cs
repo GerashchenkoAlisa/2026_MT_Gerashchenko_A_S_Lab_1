@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities;
 
-
 [Table("ExecutionResults")]
 public class ExecutionResult : BaseEntity<int>
 {
@@ -21,7 +20,8 @@ public class ExecutionResult : BaseEntity<int>
     [MaxLength(200)]
     public string? ResultDescription { get; set; }
 
-    public virtual ICollection<BuildExecution> BuildExecutions { get; } = [];
+    public virtual ICollection<BuildExecution> BuildExecutions { get; } =
+        [];
 
     public override string ToLogString(string val = "")
         => base.ToLogString($"{this.ResultName} {val}".TrimEnd());

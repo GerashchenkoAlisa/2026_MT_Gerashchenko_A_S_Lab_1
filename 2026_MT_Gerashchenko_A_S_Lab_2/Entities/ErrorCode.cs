@@ -20,7 +20,8 @@ public class ErrorCode : BaseEntity<int>
     [MaxLength(500)]
     public string? CodeDescription { get; set; }
 
-    public virtual ICollection<BuildMessage> BuildMessages { get; } = [];
+    public virtual ICollection<BuildMessage> BuildMessages { get; } =
+        [];
 
     public override string ToLogString(string val = "")
         => base.ToLogString($"{this.CodeValue} {val}".TrimEnd());

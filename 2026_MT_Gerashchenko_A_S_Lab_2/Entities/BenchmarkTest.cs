@@ -17,7 +17,8 @@ public class BenchmarkTest : BaseEntity<int>
     [MaxLength(500)]
     public string TestDescription { get; set; } = string.Empty;
 
-    public virtual ICollection<PerformanceMetric> PerformanceMetrics { get; } = [];
+    public virtual ICollection<PerformanceMetric> PerformanceMetrics { get; } =
+        [];
 
     public override string ToLogString(string val = "")
         => base.ToLogString($"{this.TestDescription} {val}".TrimEnd());

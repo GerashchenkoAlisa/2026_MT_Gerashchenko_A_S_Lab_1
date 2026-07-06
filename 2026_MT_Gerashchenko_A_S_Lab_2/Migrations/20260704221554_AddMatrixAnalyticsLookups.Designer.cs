@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
+namespace Migrations
 {
     [DbContext(typeof(BuildSystemDbContext))]
     [Migration("20260704221554_AddMatrixAnalyticsLookups")]

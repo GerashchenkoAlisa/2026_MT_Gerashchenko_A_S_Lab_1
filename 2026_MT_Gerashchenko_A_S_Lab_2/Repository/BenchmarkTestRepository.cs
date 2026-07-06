@@ -1,8 +1,8 @@
-﻿using Data;
+﻿using System.Threading.Tasks;
+using Data;
 using Entities;
-using Repository;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
+using Repository;
 
 namespace Repository;
 

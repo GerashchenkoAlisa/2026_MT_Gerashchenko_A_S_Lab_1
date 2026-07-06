@@ -1,9 +1,10 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
+namespace Migrations
 {
     /// <inheritdoc />
     public partial class AddMatrixAnalyticsLookups : Migration
@@ -11,6 +12,7 @@ namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            ArgumentNullException.ThrowIfNull(migrationBuilder);
             migrationBuilder.CreateTable(
                 name: "Applications",
                 columns: table => new
@@ -18,7 +20,7 @@ namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
                     ApplicationId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ApplicationName = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
-                    RepositoryPath = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false)
+                    RepositoryPath = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
                 },
                 constraints: table =>
                 {
@@ -31,7 +33,7 @@ namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
                 {
                     BenchmarkTestId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    TestDescription = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false)
+                    TestDescription = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
                 },
                 constraints: table =>
                 {
@@ -45,7 +47,7 @@ namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
                     ErrorCodeId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     CodeValue = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    CodeDescription = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true)
+                    CodeDescription = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
                 },
                 constraints: table =>
                 {
@@ -59,7 +61,7 @@ namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
                     ExecutionResultId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ResultName = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false),
-                    ResultDescription = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true)
+                    ResultDescription = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
                 },
                 constraints: table =>
                 {
@@ -73,7 +75,7 @@ namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
                     MessageSeverityId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     SeverityName = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    SeverityDescription = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true)
+                    SeverityDescription = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
                 },
                 constraints: table =>
                 {
@@ -88,7 +90,7 @@ namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     ProcessorName = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
                     PhysicalCores = table.Column<int>(type: "INTEGER", nullable: false),
-                    LogicalCores = table.Column<int>(type: "INTEGER", nullable: false)
+                    LogicalCores = table.Column<int>(type: "INTEGER", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -101,7 +103,7 @@ namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
                 {
                     ProcessStageId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    StageName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false)
+                    StageName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                 },
                 constraints: table =>
                 {
@@ -115,7 +117,7 @@ namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
                     SystemEnvironmentId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     EnvironmentName = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
-                    EnvironmentDetails = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true)
+                    EnvironmentDetails = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
                 },
                 constraints: table =>
                 {
@@ -133,7 +135,7 @@ namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
                     ExecutionResultId = table.Column<int>(type: "INTEGER", nullable: false),
                     ExecutionStartTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ExecutionTimeMs = table.Column<long>(type: "INTEGER", nullable: false),
-                    ExitCode = table.Column<int>(type: "INTEGER", nullable: false)
+                    ExitCode = table.Column<int>(type: "INTEGER", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -166,7 +168,7 @@ namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     ProcessorModelId = table.Column<int>(type: "INTEGER", nullable: true),
                     MemoryCapacityGb = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
-                    SystemEnvironmentId = table.Column<int>(type: "INTEGER", nullable: false)
+                    SystemEnvironmentId = table.Column<int>(type: "INTEGER", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -194,7 +196,7 @@ namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
                     MessageTimestamp = table.Column<DateTime>(type: "TEXT", nullable: false),
                     MessageSeverityId = table.Column<int>(type: "INTEGER", nullable: false),
                     ErrorCodeId = table.Column<int>(type: "INTEGER", nullable: true),
-                    MessageText = table.Column<string>(type: "TEXT", nullable: false)
+                    MessageText = table.Column<string>(type: "TEXT", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -229,7 +231,7 @@ namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
                     BuildExecutionId = table.Column<int>(type: "INTEGER", nullable: false),
                     SingleThreadTimeMs = table.Column<long>(type: "INTEGER", nullable: false),
                     MultiThreadTimeMs = table.Column<long>(type: "INTEGER", nullable: false),
-                    MetricRecordTime = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    MetricRecordTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -361,6 +363,7 @@ namespace _2026_MT_Gerashchenko_A_S_Lab_2.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            ArgumentNullException.ThrowIfNull(migrationBuilder);
             migrationBuilder.DropTable(
                 name: "BuildMessages");
 

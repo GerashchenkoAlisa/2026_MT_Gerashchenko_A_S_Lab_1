@@ -21,7 +21,8 @@ public class Application : BaseEntity<int>
     [MaxLength(500)]
     public string RepositoryPath { get; set; } = string.Empty;
 
-    public virtual ICollection<BuildExecution> BuildExecutions { get; } = [];
+    public virtual ICollection<BuildExecution> BuildExecutions { get; } =
+        [];
 
     public override string ToLogString(string val = "")
         => base.ToLogString($"{this.ApplicationName} @ {this.RepositoryPath} {val}".TrimEnd());

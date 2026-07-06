@@ -1,9 +1,9 @@
-﻿using Data;
-using Entities;
-using Repository;
-using Microsoft.EntityFrameworkCore.Storage;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Data;
+using Entities;
+using Microsoft.EntityFrameworkCore.Storage;
+using Repository;
 
 namespace UnitsOfWork;
 

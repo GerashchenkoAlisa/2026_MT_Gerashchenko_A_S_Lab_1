@@ -1,5 +1,5 @@
-﻿using Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Entities;
 
 namespace Factories;
 
@@ -53,7 +53,7 @@ public class DefaultSystemDataFactory : ISystemDataFactory
     ];
 
     public ServerConfiguration CreateServerConfiguration() =>
-        new()
+       new ()
         {
             ProcessorModelId = 1,
             MemoryCapacityGb = 32.00m,

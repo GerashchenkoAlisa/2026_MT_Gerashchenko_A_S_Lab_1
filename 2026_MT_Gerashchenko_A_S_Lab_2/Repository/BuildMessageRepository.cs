@@ -1,10 +1,10 @@
-﻿using Data;
-using Entities;
-using Repository;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Data;
+using Entities;
+using Microsoft.EntityFrameworkCore;
+using Repository;
 
 namespace Repository;
 

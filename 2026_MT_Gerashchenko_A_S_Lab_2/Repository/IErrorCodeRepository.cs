@@ -1,6 +1,6 @@
-﻿using Data;
+﻿using System.Threading.Tasks;
+using Data;
 using Entities;
-using System.Threading.Tasks;
 
 namespace Repository;
 

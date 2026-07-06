@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using Data;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data;
@@ -73,8 +74,10 @@ public class BuildSystemDbContext : DbContext
         modelBuilder?.Entity<SystemEnvironment>()
             .HasIndex(se => se.EnvironmentName).IsUnique();
     }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        ArgumentNullException.ThrowIfNull(optionsBuilder);
         if (!optionsBuilder.IsConfigured)
         {
             optionsBuilder.UseSqlite(DatabaseConfig.ConnectionString);

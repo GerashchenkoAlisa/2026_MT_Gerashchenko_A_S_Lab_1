@@ -20,7 +20,8 @@ public class MessageSeverity : BaseEntity<int>
     [MaxLength(200)]
     public string? SeverityDescription { get; set; }
 
-    public virtual ICollection<BuildMessage> BuildMessages { get; } = [];
+    public virtual ICollection<BuildMessage> BuildMessages { get; } =
+        [];
 
     public override string ToLogString(string val = "")
         => base.ToLogString($"{this.SeverityName} {val}".TrimEnd());
