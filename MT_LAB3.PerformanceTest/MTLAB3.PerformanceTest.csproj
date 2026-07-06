@@ -8,7 +8,7 @@
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
 		<CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
-		<NoWarn>SA0001,SA1600,SA1633, CA1000</NoWarn>
+		<NoWarn>CA1000,CA1024,CA1303,CA1814,CA1861,CA5394,CS0612,CS0618,NETSDK1137,SA0001,SA1600,SA1601,SA1633</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
