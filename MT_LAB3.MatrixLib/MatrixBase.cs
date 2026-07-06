@@ -3,7 +3,6 @@
 // </copyright>
 
 using System.Numerics;
-using MTLAB3.MatrixLib;
 
 namespace MTLAB3.MatrixLib;
 public abstract class MatrixBase<T> : IMatrix<T>

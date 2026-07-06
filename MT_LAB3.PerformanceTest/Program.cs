@@ -7,7 +7,6 @@ using System.Numerics;
 using System.Security.Cryptography;
 using Data;
 using Entities;
-using MatrixLib;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MTLAB3.MatrixLib;
@@ -259,7 +258,7 @@ internal static class Program
 
         try
         {
-            var processor = (await uow.ProcessorModels.FindAsync(p => p.ProcessorName.Contains(cpuModelName)))
+            var processor = (await uow.ProcessorModels.FindAsync(p => p.ProcessorName.Contains(cpuModelName)).ConfigureAwait(false))
                             .FirstOrDefault() ?? new ProcessorModel
                             {
                                 ProcessorName = cpuModelName,
@@ -269,22 +268,22 @@ internal static class Program
 
             if (processor.ProcessorModelId == 0)
             {
-                await uow.ProcessorModels.AddAsync(processor);
-                await uow.SaveChangesAsync();
+                await uow.ProcessorModels.AddAsync(processor).ConfigureAwait(false);
+                int v = await uow.SaveChangesAsync().ConfigureAwait(false);
             }
 
-            var env = (await uow.SystemEnvironments.FindAsync(e => e.EnvironmentName == OsName))
+            var env = (await uow.SystemEnvironments.FindAsync(e => e.EnvironmentName == OsName).ConfigureAwait(false))
                       .FirstOrDefault() ?? new SystemEnvironment { EnvironmentName = OsName };
 
             if (env.SystemEnvironmentId == 0)
             {
-                await uow.SystemEnvironments.AddAsync(env);
-                await uow.SaveChangesAsync();
+                await uow.SystemEnvironments.AddAsync(env).ConfigureAwait(false);
+                await uow.SaveChangesAsync().ConfigureAwait(false);
             }
 
             var benchmark = new BenchmarkTest { TestDescription = $"Matrix Operations {DateTime.UtcNow:yyyy-MM-dd}" };
-            await uow.BenchmarkTests.AddAsync(benchmark);
-            await uow.SaveChangesAsync();
+            await uow.BenchmarkTests.AddAsync(benchmark).ConfigureAwait(false);
+            await uow.SaveChangesAsync().ConfigureAwait(false);
 
             foreach (var r in Results)
             {
@@ -297,10 +296,10 @@ internal static class Program
                     MultiThreadTimeMs = r.Microseconds / 1000,
                     MetricRecordTime = DateTime.UtcNow,
                 };
-                await uow.PerformanceMetrics.AddAsync(metric);
+                await uow.PerformanceMetrics.AddAsync(metric).ConfigureAwait(false);
             }
 
-            await uow.SaveChangesAsync();
+            await uow.SaveChangesAsync().ConfigureAwait(false);
             success = true;
             Console.WriteLine($"Saved {Results.Count} performance records to DB.");
         }

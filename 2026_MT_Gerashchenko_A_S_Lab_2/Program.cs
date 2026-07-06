@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using UnitsOfWork;
 
-namespace Program;
+namespace _2026MTGerashchenkoASLab_2;
 
 public static class Program
 {

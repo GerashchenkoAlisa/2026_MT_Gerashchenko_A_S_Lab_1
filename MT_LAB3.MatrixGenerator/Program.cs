@@ -4,7 +4,6 @@
 
 using System.Numerics;
 using System.Security.Cryptography;
-using MatrixLib;
 using MTLAB3.MatrixLib;
 
 namespace MTLAB3.MatrixGenerator;

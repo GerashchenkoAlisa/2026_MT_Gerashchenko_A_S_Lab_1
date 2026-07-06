@@ -3,9 +3,8 @@
 // </copyright>
 
 using System.Numerics;
-using MTLAB3.MatrixLib;
 
-namespace MatrixLib;
+namespace MTLAB3.MatrixLib;
 public static class MatrixExtensions
 {
     public static void SaveToBinaryFile<T>(this IMatrix<T> matrix, string path)

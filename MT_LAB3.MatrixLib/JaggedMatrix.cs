@@ -1,5 +1,4 @@
 using System.Numerics;
-using MTLAB3.MatrixLib;
 
 namespace MTLAB3.MatrixLib;
 public sealed class JaggedMatrix<T> : MatrixBase<T>
