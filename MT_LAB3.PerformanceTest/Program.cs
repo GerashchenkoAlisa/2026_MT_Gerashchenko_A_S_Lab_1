@@ -15,11 +15,11 @@ using UnitsOfWork;
 namespace MTLAB3.PerformanceTest;
 
 internal sealed record BenchResult(
-    int Size,
-    string TestType,
-    string Algorithm,
-    string Storage,
-    long Microseconds);
+    int size,
+    string testType,
+    string algorithm,
+    string storage,
+    long microseconds);
 
 internal static class Program
 {
@@ -229,13 +229,13 @@ internal static class Program
     {
         Console.WriteLine(new string('-', 72));
 
-        foreach (var g in Results.GroupBy(r => new { r.Size, r.TestType, r.Algorithm })
-            .OrderBy(g => g.Key.Size)
-            .ThenBy(g => g.Key.TestType)
-            .ThenBy(g => g.Key.Algorithm))
+        foreach (var g in Results.GroupBy(r => new { r.size, r.testType, r.algorithm })
+            .OrderBy(g => g.Key.size)
+            .ThenBy(g => g.Key.testType)
+            .ThenBy(g => g.Key.algorithm))
         {
-            double avg = g.Average(r => r.Microseconds);
-            Console.WriteLine($"   {g.Key.Size,5}x{g.Key.Size} | {g.Key.Algorithm,-25} | {avg,8:F0} us");
+            double avg = g.Average(r => r.microseconds);
+            Console.WriteLine($"   {g.Key.size,5}x{g.Key.size} | {g.Key.algorithm,-25} | {avg,8:F0} us");
         }
     }
 
@@ -292,8 +292,8 @@ internal static class Program
                     BenchmarkTestId = benchmark.BenchmarkTestId,
                     ServerConfigurationId = 1,
                     BuildExecutionId = 1,
-                    SingleThreadTimeMs = r.Microseconds / 1000,
-                    MultiThreadTimeMs = r.Microseconds / 1000,
+                    SingleThreadTimeMs = r.microseconds / 1000,
+                    MultiThreadTimeMs = r.microseconds / 1000,
                     MetricRecordTime = DateTime.UtcNow,
                 };
                 await uow.PerformanceMetrics.AddAsync(metric).ConfigureAwait(false);
