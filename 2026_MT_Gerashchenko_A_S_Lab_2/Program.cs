@@ -1,14 +1,13 @@
-﻿using Data;
-using Entities;
-using Factories;
-using UnitsOfWork;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Data;
+using Entities;
+using Factories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Data.Data;
+using UnitsOfWork;
 
 namespace Program;
 
@@ -396,4 +395,3 @@ public static class Program
         Console.WriteLine(text);
     }
 }
-
