@@ -28,12 +28,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\2026_MT_Gerashchenko_A_S_Lab_2\2026_MT_Gerashchenko_A_S_Lab_2.csproj" />
+		<AdditionalFiles Include="..\code-analysis.ruleset" Link="Properties\code-analysis.ruleset" />
+		<AdditionalFiles Include="..\stylecop.json" Link="Properties\stylecop.json" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<AdditionalFiles Include="..\code-analysis.ruleset" Link="Properties\code-analysis.ruleset" />
-		<AdditionalFiles Include="..\stylecop.json" Link="Properties\stylecop.json" />
+	  <ProjectReference Include="..\2026_MT_Gerashchenko_A_S_Lab_2\2026_MT_Gerashchenko_A_S_Lab_2.csproj" />
 	</ItemGroup>
 
 </Project>
