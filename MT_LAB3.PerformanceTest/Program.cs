@@ -230,12 +230,12 @@ internal static class Program
         Console.WriteLine(new string('-', 72));
 
         foreach (var g in Results.GroupBy(r => new { r.size, r.testType, r.algorithm })
-            .OrderBy(g => g.Key.Size)
-            .ThenBy(g => g.Key.TestType)
-            .ThenBy(g => g.Key.Algorithm))
+            .OrderBy(g => g.Key.size)
+            .ThenBy(g => g.Key.testType)
+            .ThenBy(g => g.Key.algorithm))
         {
-            double avg = g.Average(r => r.Microseconds);
-            Console.WriteLine($"   {g.Key.Size,5}x{g.Key.Size} | {g.Key.Algorithm,-25} | {avg,8:F0} us");
+            double avg = g.Average(r => r.microseconds);
+            Console.WriteLine($"   {g.Key.size,5}x{g.Key.size} | {g.Key.algorithm,-25} | {avg,8:F0} us");
         }
     }
 
