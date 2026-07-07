@@ -23,15 +23,15 @@ public static class ReportRenderer
 
         foreach (var item in data)
         {
-            var color = item.TimeMs < 1000 ? "green" : "yellow";
+            var color = item.timeMs < 1000 ? "green" : "yellow";
 
             table.AddRow(
-                item.Test,
-                item.Algorithm,
-                $"[{color}]{item.TimeMs}[/]",
-                $"{item.Gain:F2}",
-                item.IsParallel ? "[cyan]Да[/]" : "[grey]Нет[/]",
-                item.Processor);
+                item.test,
+                item.algorithm,
+                $"[{color}]{item.timeMs}[/]",
+                $"{item.gain:F2}",
+                item.isParallel ? "[cyan]Да[/]" : "[grey]Нет[/]",
+                item.processor);
         }
 
         AnsiConsole.Write(table);
@@ -79,10 +79,10 @@ public static class ReportRenderer
         foreach (var item in anomalies.Take(10))
         {
             table.AddRow(
-                item.Test,
-                item.SingleMs.ToString(System.Globalization.CultureInfo.InvariantCulture),
-                item.MultiMs.ToString(System.Globalization.CultureInfo.InvariantCulture),
-                $"[red]{item.Overhead}[/]");
+                item.test,
+                item.singleMs.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                item.multiMs.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                $"[red]{item.overhead}[/]");
         }
 
         AnsiConsole.Write(table);
@@ -103,10 +103,10 @@ public static class ReportRenderer
         foreach (var item in data)
         {
             table.AddRow(
-                item.Processor,
-                item.AvgSingle.ToString("F0", System.Globalization.CultureInfo.InvariantCulture),
-                item.AvgMulti.ToString("F0", System.Globalization.CultureInfo.InvariantCulture),
-                item.Count.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                item.processor,
+                item.avgSingle.ToString("F0", System.Globalization.CultureInfo.InvariantCulture),
+                item.avgMulti.ToString("F0", System.Globalization.CultureInfo.InvariantCulture),
+                item.count.ToString(System.Globalization.CultureInfo.InvariantCulture));
         }
 
         AnsiConsole.Write(table);
@@ -127,7 +127,7 @@ public static class ReportRenderer
 
         foreach (var item in data)
         {
-            chart.AddItem(item.SizeGroup, (double)item.BestGain, Color.Cyan1);
+            chart.AddItem(item.sizeGroup, (double)item.bestGain, Color.Cyan1);
         }
 
         AnsiConsole.Write(chart);
@@ -146,8 +146,8 @@ public static class ReportRenderer
         foreach (var item in data)
         {
             table.AddRow(
-                item.Test,
-                item.AvgTime.ToString("F0", System.Globalization.CultureInfo.InvariantCulture));
+                item.test,
+                item.avgTime.ToString("F0", System.Globalization.CultureInfo.InvariantCulture));
         }
 
         AnsiConsole.Write(table);

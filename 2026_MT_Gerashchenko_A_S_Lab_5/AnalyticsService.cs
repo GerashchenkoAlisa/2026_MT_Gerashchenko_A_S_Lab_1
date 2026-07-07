@@ -32,12 +32,12 @@ public class AnalyticsService(IBuildSystemUnitOfWork uow)
             .OrderBy(m => m.SingleThreadTimeMs)
             .Take(3)
             .Select(m => new TopMethodEntry(
-                Test: m.BenchmarkTest.TestDescription,
-                TimeMs: m.SingleThreadTimeMs,
-                Gain: m.PerformanceGain,
-                Processor: m.ServerConfiguration?.ProcessorModel?.ProcessorName ?? "Unknown",
-                Algorithm: m.BenchmarkTest.TestDescription,
-                IsParallel: false))];
+                test: m.BenchmarkTest.TestDescription,
+                timeMs: m.SingleThreadTimeMs,
+                gain: m.PerformanceGain,
+                processor: m.ServerConfiguration?.ProcessorModel?.ProcessorName ?? "Unknown",
+                algorithm: m.BenchmarkTest.TestDescription,
+                isParallel: false))];
     }
 
     // 2. Среднее ускорение
@@ -59,10 +59,10 @@ public class AnalyticsService(IBuildSystemUnitOfWork uow)
             .Where(m => m.MultiThreadTimeMs > m.SingleThreadTimeMs)
             .OrderByDescending(m => m.MultiThreadTimeMs - m.SingleThreadTimeMs)
             .Select(m => new AnomalyEntry(
-                Test: m.BenchmarkTest.TestDescription,
-                SingleMs: m.SingleThreadTimeMs,
-                MultiMs: m.MultiThreadTimeMs,
-                Overhead: m.MultiThreadTimeMs - m.SingleThreadTimeMs))];
+                test: m.BenchmarkTest.TestDescription,
+                singleMs: m.SingleThreadTimeMs,
+                multiMs: m.MultiThreadTimeMs,
+                overhead: m.MultiThreadTimeMs - m.SingleThreadTimeMs))];
     }
 
     // 4. Сравнение процессоров
@@ -73,11 +73,11 @@ public class AnalyticsService(IBuildSystemUnitOfWork uow)
             .GroupBy(m =>
                 m.ServerConfiguration?.ProcessorModel?.ProcessorName ?? "Unknown")
             .Select(g => new EnvironmentEntry(
-                Processor: g.Key,
-                AvgSingle: g.Average(x => x.SingleThreadTimeMs),
-                AvgMulti: g.Average(x => x.MultiThreadTimeMs),
-                Count: g.Count()))
-            .OrderBy(x => x.AvgSingle)];
+                processor: g.Key,
+                avgSingle: g.Average(x => x.SingleThreadTimeMs),
+                avgMulti: g.Average(x => x.MultiThreadTimeMs),
+                count: g.Count()))
+            .OrderBy(x => x.avgSingle)];
     }
 
     // 5. Лучшая структура
@@ -87,8 +87,8 @@ public class AnalyticsService(IBuildSystemUnitOfWork uow)
             [.. this.metrics
             .GroupBy(m => m.BenchmarkTest.TestDescription)
             .Select(g => new BestStructureEntry(
-                SizeGroup: g.Key,
-                BestGain: g.Max(x => x.PerformanceGain)))];
+                sizeGroup: g.Key,
+                bestGain: g.Max(x => x.PerformanceGain)))];
     }
 
     // 6. Сравнение порядков
@@ -98,8 +98,8 @@ public class AnalyticsService(IBuildSystemUnitOfWork uow)
             [.. this.metrics
             .GroupBy(m => m.BenchmarkTest?.TestDescription ?? "Unknown")
             .Select(g => new OrderComparisonEntry(
-                Test: g.Key,
-                AvgTime: g.Average(x => x.SingleThreadTimeMs)))
-            .OrderBy(x => x.AvgTime)];
+                test: g.Key,
+                avgTime: g.Average(x => x.SingleThreadTimeMs)))
+            .OrderBy(x => x.avgTime)];
     }
 }
